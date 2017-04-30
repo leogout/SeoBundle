@@ -17,21 +17,6 @@ use Leogout\Bundle\SeoBundle\Seo\ImageSeoInterface;
 class TwitterSeoGenerator extends AbstractSeoGenerator
 {
     /**
-     * @var TagBuilder
-     */
-    protected $tagBuilder;
-
-    /**
-     * TwitterSeoBuilder constructor.
-     *
-     * @param TagBuilder $tagBuilder
-     */
-    public function __construct(TagBuilder $tagBuilder)
-    {
-        $this->tagBuilder = $tagBuilder;
-    }
-
-    /**
      * @param string $content
      *
      * @return $this
