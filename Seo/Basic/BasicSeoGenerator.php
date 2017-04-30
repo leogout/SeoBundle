@@ -6,6 +6,9 @@ use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Model\TitleTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\DescriptionSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\KeywordsSeoInterface;
 
 /**
  * Description of BasicSeoGenerator.
