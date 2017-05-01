@@ -23,12 +23,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function setCard($content)
     {
-        $this->tagBuilder->addMeta('twitter:card')
-            ->setType(MetaTag::NAME_TYPE)
-            ->setValue('twitter:card')
-            ->setContent((string) $content);
-
-        return $this;
+        return $this->set('twitter:card', $content);
     }
 
     /**
@@ -36,7 +31,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function getCard()
     {
-        return $this->tagBuilder->getMeta('twitter:card');
+        return $this->get('twitter:card');
     }
 
     /**
@@ -46,12 +41,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function setTitle($content)
     {
-        $this->tagBuilder->addMeta('twitter:title')
-            ->setType(MetaTag::NAME_TYPE)
-            ->setValue('twitter:title')
-            ->setContent((string) $content);
-
-        return $this;
+        return $this->set('twitter:title', $content);
     }
 
     /**
@@ -59,7 +49,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function getTitle()
     {
-        return $this->tagBuilder->getMeta('twitter:title');
+        return $this->get('twitter:title');
     }
 
     /**
@@ -69,12 +59,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function setSite($content)
     {
-        $this->tagBuilder->addMeta('twitter:site')
-            ->setType(MetaTag::NAME_TYPE)
-            ->setValue('twitter:site')
-            ->setContent((string) $content);
-
-        return $this;
+        return $this->set('twitter:site', $content);
     }
 
     /**
@@ -82,7 +67,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function getSite()
     {
-        return $this->tagBuilder->getMeta('twitter:site');
+        return $this->get('twitter:site');
     }
 
     /**
@@ -92,12 +77,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function setDescription($content)
     {
-        $this->tagBuilder->addMeta('twitter:description')
-            ->setType(MetaTag::NAME_TYPE)
-            ->setValue('twitter:description')
-            ->setContent((string) $content);
-
-        return $this;
+        return $this->set('twitter:description', $content);
     }
 
     /**
@@ -105,7 +85,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function getDescription()
     {
-        return $this->tagBuilder->getMeta('twitter:description');
+        return $this->get('twitter:description');
     }
 
     /**
@@ -115,12 +95,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function setImage($content)
     {
-        $this->tagBuilder->addMeta('twitter:image')
-            ->setType(MetaTag::NAME_TYPE)
-            ->setValue('twitter:image')
-            ->setContent((string) $content);
-
-        return $this;
+        return $this->set('twitter:image', $content);
     }
 
     /**
@@ -128,13 +103,13 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      */
     public function getImage()
     {
-        return $this->tagBuilder->getMeta('twitter:image');
+        return $this->get('twitter:image');
     }
 
     /**
      * Generate seo tags from given resource.
      *
-     * @param TitleSeoInterface|DescriptionSeoInterface|KeywordsSeoInterface $resource
+     * @param TitleSeoInterface|DescriptionSeoInterface|ImageSeoInterface $resource
      *
      * @return $this
      */
@@ -149,6 +124,32 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
         if ($resource instanceof ImageSeoInterface) {
             $this->setImage($resource->getSeoImage());
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return MetaTag
+     */
+    public function get($type)
+    {
+        return $this->tagBuilder->getMeta($type);
+    }
+
+    /**
+     * @param string $type
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function set($type, $value)
+    {
+        $this->tagBuilder->addMeta($type)
+            ->setType(MetaTag::NAME_TYPE)
+            ->setValue($type)
+            ->setContent((string) $value);
 
         return $this;
     }

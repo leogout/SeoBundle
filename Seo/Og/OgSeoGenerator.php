@@ -108,13 +108,13 @@ class OgSeoGenerator extends AbstractSeoGenerator
      */
     public function getUrl()
     {
-        return $this->tagBuilder->getMeta('og:url');
+        return $this->get('og:url');
     }
 
     /**
      * Generate seo tags from given resource.
      *
-     * @param TitleSeoInterface|DescriptionSeoInterface|KeywordsSeoInterface $resource
+     * @param TitleSeoInterface|DescriptionSeoInterface|ImageSeoInterface $resource
      *
      * @return $this
      */
