@@ -1,6 +1,6 @@
 <?php
 
-namespace Leogout\Bundle\SeoBundle\Seo\Basic;
+namespace Leogout\Bundle\SeoBundle\Seo;
 
 /**
  * Description of TitleSeoInterface.

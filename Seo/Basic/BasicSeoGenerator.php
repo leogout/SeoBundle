@@ -6,6 +6,9 @@ use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Model\TitleTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\DescriptionSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\KeywordsSeoInterface;
 
 /**
  * Description of BasicSeoGenerator.
@@ -14,21 +17,6 @@ use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
  */
 class BasicSeoGenerator extends AbstractSeoGenerator
 {
-    /**
-     * @var TagBuilder
-     */
-    protected $tagBuilder;
-
-    /**
-     * BasicSeoBuilder constructor.
-     *
-     * @param TagBuilder $tagBuilder
-     */
-    public function __construct(TagBuilder $tagBuilder)
-    {
-        $this->tagBuilder = $tagBuilder;
-    }
-
     /**
      * @param string      $content
      * @param string|null $separator
