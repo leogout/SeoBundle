@@ -2,32 +2,20 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Basic;
 
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoConfigurator;
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+
 /**
  * Description of BasicSeoConfigurator.
  *
  * @author: leogout
  */
-class BasicSeoConfigurator
+class BasicSeoConfigurator extends AbstractSeoConfigurator
 {
     /**
-     * @var array
+     * @param AbstractSeoGenerator $generator
      */
-    protected $config;
-
-    /**
-     * BasicSeoConfigurator constructor.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @param BasicSeoGenerator $generator
-     */
-    public function configure(BasicSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator)
     {
         if (null !== $title = $this->getConfig('title')) {
             $generator->setTitle($title);
@@ -44,19 +32,5 @@ class BasicSeoConfigurator
         if (null !== $canonical = $this->getConfig('canonical')) {
             $generator->setCanonical($canonical);
         }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string|null
-     */
-    private function getConfig($name)
-    {
-        if (!isset($this->config[$name])) {
-            return null;
-        }
-
-        return $this->config[$name];
     }
 }

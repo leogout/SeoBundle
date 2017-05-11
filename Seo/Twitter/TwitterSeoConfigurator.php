@@ -2,32 +2,20 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Twitter;
 
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoConfigurator;
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+
 /**
  * Description of TwitterSeoConfigurator.
  *
  * @author: leogout
  */
-class TwitterSeoConfigurator
+class TwitterSeoConfigurator extends AbstractSeoConfigurator
 {
     /**
-     * @var array
+     * @param AbstractSeoGenerator $generator
      */
-    protected $config;
-
-    /**
-     * TwitterSeoConfigurator constructor.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @param TwitterSeoGenerator $generator
-     */
-    public function configure(TwitterSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator)
     {
         if (null !== $title = $this->getConfig('title')) {
             $generator->setTitle($title);
@@ -44,19 +32,5 @@ class TwitterSeoConfigurator
         if (null !== $site = $this->getConfig('site')) {
             $generator->setSite($site);
         }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string|null
-     */
-    private function getConfig($name)
-    {
-        if (!isset($this->config[$name])) {
-            return null;
-        }
-
-        return $this->config[$name];
     }
 }
