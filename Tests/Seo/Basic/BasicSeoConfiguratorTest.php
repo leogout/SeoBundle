@@ -28,12 +28,7 @@ class BasicSeoConfiguratorTest extends TestCase
     public function testTitle()
     {
         $config = [
-            'title' => [
-                'enabled' => true,
-                'content' => 'Site',
-                'prefix' => 'Awesome',
-                'separator' => ' | ',
-            ],
+            'title' => 'Awesome | Site'
         ];
 
         $configurator = new BasicSeoConfigurator($config);
@@ -48,10 +43,7 @@ class BasicSeoConfiguratorTest extends TestCase
     public function testDescription()
     {
         $config = [
-            'description' => [
-                'enabled' => true,
-                'content' => 'My awesome site is so cool!',
-            ],
+            'description' => 'My awesome site is so cool!',
         ];
 
         $configurator = new BasicSeoConfigurator($config);
@@ -66,10 +58,7 @@ class BasicSeoConfiguratorTest extends TestCase
     public function testKeywords()
     {
         $config = [
-            'keywords' => [
-                'enabled' => true,
-                'content' => 'awesome, cool',
-            ],
+            'keywords' => 'awesome, cool',
         ];
 
         $configurator = new BasicSeoConfigurator($config);
@@ -84,10 +73,7 @@ class BasicSeoConfiguratorTest extends TestCase
     public function testCanonical()
     {
         $config = [
-            'canonical' => [
-                'enabled' => true,
-                'url' => 'http://127.0.0.1:8000',
-            ],
+            'canonical' => 'http://127.0.0.1:8000',
         ];
 
         $configurator = new BasicSeoConfigurator($config);
@@ -103,7 +89,6 @@ class BasicSeoConfiguratorTest extends TestCase
     {
         $config = [
             'robots' => [
-                'enabled' => true,
                 'index' => true,
                 'follow' => true,
             ],
@@ -114,35 +99,6 @@ class BasicSeoConfiguratorTest extends TestCase
 
         $this->assertEquals(
             '<meta name="robots" content="index, follow" />',
-            $this->generator->render()
-        );
-    }
-
-    public function testDisableAll()
-    {
-        $config = [
-            'title' => [
-                'enabled' => false,
-            ],
-            'description' => [
-                'enabled' => false,
-            ],
-            'keywords' => [
-                'enabled' => false,
-            ],
-            'canonical' => [
-                'enabled' => false,
-            ],
-            'robots' => [
-                'enabled' => false,
-            ],
-        ];
-
-        $configurator = new BasicSeoConfigurator($config);
-        $configurator->configure($this->generator);
-
-        $this->assertEquals(
-            '',
             $this->generator->render()
         );
     }
