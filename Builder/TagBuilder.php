@@ -62,7 +62,7 @@ class TagBuilder implements RenderableInterface
     }
 
     /**
-     * @return TitleTag|void
+     * @return TitleTag
      */
     public function getTitle()
     {

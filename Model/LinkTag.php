@@ -112,7 +112,7 @@ class LinkTag implements RenderableInterface
     private function sprintfIfNotNull($format, $value)
     {
         if ('' === $value || null === $value) {
-            return;
+            return '';
         }
 
         return sprintf($format, $value);
