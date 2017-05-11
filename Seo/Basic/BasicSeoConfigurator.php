@@ -30,35 +30,31 @@ class BasicSeoConfigurator
     public function configure(BasicSeoGenerator $generator)
     {
         if (null !== $title = $this->getConfig('title')) {
-            $generator->setTitle($title['content'], $title['separator'], $title['prefix']);
+            $generator->setTitle($title);
         }
         if (null !== $description = $this->getConfig('description')) {
-            $generator->setDescription($description['content']);
+            $generator->setDescription($description);
         }
         if (null !== $keywords = $this->getConfig('keywords')) {
-            $generator->setKeywords($keywords['content']);
+            $generator->setKeywords($keywords);
         }
         if (null !== $robots = $this->getConfig('robots')) {
             $generator->setRobots($robots['index'], $robots['follow']);
         }
         if (null !== $canonical = $this->getConfig('canonical')) {
-            $generator->setCanonical($canonical['url']);
+            $generator->setCanonical($canonical);
         }
     }
 
     /**
      * @param string $name
      *
-     * @return bool
+     * @return string|null
      */
     private function getConfig($name)
     {
         if (!isset($this->config[$name])) {
-            return;
-        }
-
-        if (!$this->config[$name]['enabled']) {
-            return;
+            return null;
         }
 
         return $this->config[$name];
