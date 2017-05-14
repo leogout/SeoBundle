@@ -109,6 +109,14 @@ class LinkTag implements RenderableInterface
         return $this;
     }
 
+    /**
+     * Returns a string only if $value isn't null
+     *
+     * @param string $format
+     * @param string $value
+     *
+     * @return string
+     */
     private function sprintfIfNotNull($format, $value)
     {
         if ('' === $value || null === $value) {
