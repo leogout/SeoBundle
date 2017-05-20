@@ -25,4 +25,4 @@ before_install:
 
 install: composer update
 
-script: ./vendor/bin/simple-phpunit -v
+script: phpunit -v
