@@ -13,7 +13,7 @@ use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 class SeoExtension extends \Twig_Extension
 {
     /**
-     * @var AbstractSeoGenerator[]
+     * @var SeoGeneratorProvider
      */
     protected $generatorProvider;
 

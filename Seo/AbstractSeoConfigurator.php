@@ -32,7 +32,7 @@ abstract class AbstractSeoConfigurator
     /**
      * @param string $name
      *
-     * @return string|null
+     * @return mixed|null
      */
     protected function getConfig($name)
     {
