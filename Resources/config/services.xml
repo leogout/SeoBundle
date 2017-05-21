@@ -9,7 +9,7 @@
             <argument type="collection"/>
         </service>
         <service id="leogout_seo.tag_factory" class="Leogout\Bundle\SeoBundle\Factory\TagFactory"/>
-        <service id="leogout_seo.builder" class="Leogout\Bundle\SeoBundle\Builder\TagBuilder">
+        <service id="leogout_seo.builder" class="Leogout\Bundle\SeoBundle\Builder\TagBuilder" shared="false">
             <argument id="leogout_seo.tag_factory" type="service"/>
         </service>
         <service id="leogout_seo.twig.seo_extension" class="Leogout\Bundle\SeoBundle\Twig\SeoExtension">
@@ -17,5 +17,4 @@
             <tag name="twig.extension"/>
         </service>
     </services>
-
 </container>

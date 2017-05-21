@@ -2,65 +2,35 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Og;
 
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoConfigurator;
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+
 /**
  * Description of OgSeoConfigurator.
  *
  * @author: leogout
  */
-class OgSeoConfigurator
+class OgSeoConfigurator extends AbstractSeoConfigurator
 {
     /**
-     * @var array
+     * @param AbstractSeoGenerator $generator
      */
-    protected $config;
-
-    /**
-     * FacebookSeoConfigurator constructor.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @param OgSeoGenerator $generator
-     */
-    public function configure(OgSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator)
     {
         if (null !== $title = $this->getConfig('title')) {
-            $generator->setTitle($title['content'], $title['separator'], $title['prefix']);
+            $generator->setTitle($title);
         }
         if (null !== $description = $this->getConfig('description')) {
-            $generator->setDescription($description['content']);
+            $generator->setDescription($description);
         }
-        if (null !== $keywords = $this->getConfig('keywords')) {
-            $generator->setKeywords($keywords['content']);
+        if (null !== $image = $this->getConfig('image')) {
+            $generator->setImage($image);
         }
-        if (null !== $robots = $this->getConfig('robots')) {
-            $generator->setRobots($robots['index'], $robots['follow']);
+        if (null !== $type = $this->getConfig('type')) {
+            $generator->setType($type);
         }
-        if (null !== $canonical = $this->getConfig('canonical')) {
-            $generator->setCanonical($canonical['url']);
+        if (null !== $url = $this->getConfig('url')) {
+            $generator->setImage($url);
         }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return array|null
-     */
-    private function getConfig($name)
-    {
-        if (!isset($this->config[$name])) {
-            return null;
-        }
-
-        if (!$this->config[$name]['enabled']) {
-            return null;
-        }
-
-        return $this->config[$name];
     }
 }

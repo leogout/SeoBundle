@@ -17,7 +17,7 @@ class SeoGeneratorPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->findDefinition('leogout_seo.provider.generator');
+        $definition = $container->getDefinition('leogout_seo.provider.generator');
         $taggedServices = $container->findTaggedServiceIds('leogout_seo.generator');
         $seoGenerators = [];
         foreach ($taggedServices as $id => $tags) {

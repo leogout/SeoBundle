@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="leogout_seo.configurator.twitter" class="Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoConfigurator">
+            <argument>%leogout_seo.twitter%</argument>
+        </service>
+
+        <service id="leogout_seo.generator.twitter" class="Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator">
+            <argument id="leogout_seo.builder" type="service"/>
+            <configurator service="leogout_seo.configurator.twitter" method="configure" />
+            <tag name="leogout_seo.generator" alias="twitter"/>
+        </service>
+    </services>
+</container>

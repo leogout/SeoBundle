@@ -2,7 +2,6 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Twitter;
 
-use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;

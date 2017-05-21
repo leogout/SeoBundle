@@ -26,7 +26,7 @@ class TagBuilderTest extends TestCase
 
     public function testRenderAll()
     {
-        $this->tagBuilder->setTitle('Site', ' | ', 'Awesonme');
+        $this->tagBuilder->setTitle('Awesonme | Site');
         $this->tagBuilder->addMeta('keywords', MetaTag::NAME_TYPE, 'keywords', 'your, tags');
         $this->tagBuilder->addLink('rss',
             'http://symfony.com/blog',
@@ -36,14 +36,16 @@ class TagBuilderTest extends TestCase
         );
 
         $this->assertEquals(
-            "<title>Awesonme | Site</title>\n<meta name=\"keywords\" content=\"your, tags\" />\n<link href=\"http://symfony.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
+            "<title>Awesonme | Site</title>\n".
+            "<meta name=\"keywords\" content=\"your, tags\" />\n".
+            "<link href=\"http://symfony.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
             $this->tagBuilder->render()
         );
     }
 
     public function testRenderTitle()
     {
-        $this->tagBuilder->setTitle('Site', ' | ', 'Awesonme');
+        $this->tagBuilder->setTitle('Awesonme | Site');
 
         $this->assertEquals(
             '<title>Awesonme | Site</title>',

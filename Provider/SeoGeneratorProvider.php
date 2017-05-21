@@ -29,7 +29,7 @@ class SeoGeneratorProvider
     /**
      * @param string $alias
      *
-     * @return array
+     * @return AbstractSeoGenerator
      */
     public function get($alias)
     {

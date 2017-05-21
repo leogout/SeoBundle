@@ -23,37 +23,30 @@ class AppKernel extends Kernel
 ### Configuration:
 ```yml
 leogout_seo:
+    general:
+        title: Default title
+        description: Default description.
+        image: http://images.com/poneys/12/large
     basic:
-        title:
-            enabled: true
-            content: Default title
-            prefix: Awesome
-            separator: ' | '
-        description:
-            enabled: true
-            content: Default description.
-        keywords:
-            enabled: true
-            content: default, keywords
-        canonical:
-            enabled: false
-            url: http://test.com
+        title: Basic title
+        description: Basic description.
+        keywords: default, keywords
+        canonical: http://test.com
         robots:
-            enabled: false
             index: false
             follow: false
     og:
+        title: Open graph title
+        description: Open graph description.
+        image: http://images.com/poneys/12/large
         type: website # article, book, profile
-        title: Default title
-        description: Default description. # optionnal
-        url: referer
-        image: http://images.com/poneys/12
+        url: http://test.com/articles
     twitter:
+        title: Twitter title
+        description: Twitter description.
+        image: http://images.com/poneys/12/thumbnail
         card: summary # summary_large_image
-        title: Default title
-        description: Default description.
-        site: '@@leogout' # optionnal
-        image: http://images.com/poneys/12 # optionnal
+        site: '@leogoutt' # optionnal
 ```
 
 ### Contributing

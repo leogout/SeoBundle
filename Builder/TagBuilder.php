@@ -46,23 +46,19 @@ class TagBuilder implements RenderableInterface
     }
 
     /**
-     * @param string      $title
-     * @param string|null $separator
-     * @param string|null $prefix
+     * @param string $title
      *
      * @return TitleTag
      */
-    public function setTitle($title, $separator = null, $prefix = null)
+    public function setTitle($title)
     {
         return $this->title = $this->tagFactory
             ->createTitle()
-            ->setContent($title)
-            ->setPrefix($prefix)
-            ->setSeparator($separator);
+            ->setContent($title);
     }
 
     /**
-     * @return TitleTag|void
+     * @return TitleTag
      */
     public function getTitle()
     {

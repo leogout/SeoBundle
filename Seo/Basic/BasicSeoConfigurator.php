@@ -2,65 +2,35 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Basic;
 
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoConfigurator;
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+
 /**
  * Description of BasicSeoConfigurator.
  *
  * @author: leogout
  */
-class BasicSeoConfigurator
+class BasicSeoConfigurator extends AbstractSeoConfigurator
 {
     /**
-     * @var array
+     * @param AbstractSeoGenerator $generator
      */
-    protected $config;
-
-    /**
-     * BasicSeoConfigurator constructor.
-     *
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @param BasicSeoGenerator $generator
-     */
-    public function configure(BasicSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator)
     {
         if (null !== $title = $this->getConfig('title')) {
-            $generator->setTitle($title['content'], $title['separator'], $title['prefix']);
+            $generator->setTitle($title);
         }
         if (null !== $description = $this->getConfig('description')) {
-            $generator->setDescription($description['content']);
+            $generator->setDescription($description);
         }
         if (null !== $keywords = $this->getConfig('keywords')) {
-            $generator->setKeywords($keywords['content']);
+            $generator->setKeywords($keywords);
         }
         if (null !== $robots = $this->getConfig('robots')) {
             $generator->setRobots($robots['index'], $robots['follow']);
         }
         if (null !== $canonical = $this->getConfig('canonical')) {
-            $generator->setCanonical($canonical['url']);
+            $generator->setCanonical($canonical);
         }
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    private function getConfig($name)
-    {
-        if (!isset($this->config[$name])) {
-            return;
-        }
-
-        if (!$this->config[$name]['enabled']) {
-            return;
-        }
-
-        return $this->config[$name];
     }
 }
