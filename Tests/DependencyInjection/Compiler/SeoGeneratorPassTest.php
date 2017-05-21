@@ -18,9 +18,10 @@ class SeoGeneratorPassTest extends TestCase
     private $builderDefinition;
 
     /**
-     * @var MenuBuilderPass
+     * @var SeoGeneratorPass
      */
     private $pass;
+
     protected function setUp()
     {
         $this->containerBuilder = $this->prophesize('Symfony\Component\DependencyInjection\ContainerBuilder');

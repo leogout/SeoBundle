@@ -17,15 +17,13 @@ use Leogout\Bundle\SeoBundle\Seo\KeywordsSeoInterface;
 class BasicSeoGenerator extends AbstractSeoGenerator
 {
     /**
-     * @param string      $content
-     * @param string|null $separator
-     * @param string|null $prefix
+     * @param string $content
      *
      * @return $this
      */
-    public function setTitle($content, $separator = null, $prefix = null)
+    public function setTitle($content)
     {
-        $this->tagBuilder->setTitle($content, $separator, $prefix);
+        $this->tagBuilder->setTitle($content);
 
         return $this;
     }
