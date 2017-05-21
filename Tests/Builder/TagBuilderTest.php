@@ -36,7 +36,9 @@ class TagBuilderTest extends TestCase
         );
 
         $this->assertEquals(
-            "<title>Awesonme | Site</title>\n<meta name=\"keywords\" content=\"your, tags\" />\n<link href=\"http://symfony.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
+            "<title>Awesonme | Site</title>\n".
+            "<meta name=\"keywords\" content=\"your, tags\" />\n".
+            "<link href=\"http://symfony.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
             $this->tagBuilder->render()
         );
     }

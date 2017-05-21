@@ -121,7 +121,9 @@ class BasicSeoGeneratorTest extends TestCase
         $this->generator->fromResource($resource);
 
         $this->assertEquals(
-            "<title>Awesome site</title>\n<meta name=\"description\" content=\"My awesome site is so cool!\" />\n<meta name=\"keywords\" content=\"awesome, cool\" />",
+            "<title>Awesome site</title>\n".
+            "<meta name=\"description\" content=\"My awesome site is so cool!\" />\n".
+            "<meta name=\"keywords\" content=\"awesome, cool\" />",
             $this->generator->render()
         );
     }
