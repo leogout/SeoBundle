@@ -4,6 +4,7 @@ namespace Leogout\Bundle\SeoBundle\Tests\Seo\Twitter;
 
 use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Factory\TagFactory;
+use Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator;
 use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoConfigurator;
 use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
@@ -23,6 +24,17 @@ class TwitterSeoConfiguratorTest extends TestCase
     protected function setUp()
     {
         $this->generator = new TwitterSeoGenerator(new TagBuilder(new TagFactory()));
+    }
+
+    /**
+     * @expectedException \Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException
+     * @expectedExceptionMessage Invalid seo generator passed to Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoConfigurator. Expected "Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator", but got "Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator".
+     */
+    public function testException()
+    {
+        $invalidGenerator = new OgSeoGenerator(new TagBuilder(new TagFactory()));
+        $configurator = new TwitterSeoConfigurator([]);
+        $configurator->configure($invalidGenerator);
     }
 
     public function testTitle()

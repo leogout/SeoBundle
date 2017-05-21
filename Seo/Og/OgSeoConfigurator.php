@@ -2,6 +2,7 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Og;
 
+use Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoConfigurator;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 
@@ -17,6 +18,9 @@ class OgSeoConfigurator extends AbstractSeoConfigurator
      */
     public function configure(AbstractSeoGenerator $generator)
     {
+        if (!($generator instanceof OgSeoGenerator)) {
+            throw new InvalidSeoGeneratorException(__CLASS__, OgSeoGenerator::class, get_class($generator));
+        }
         if (null !== $title = $this->getConfig('title')) {
             $generator->setTitle($title);
         }
