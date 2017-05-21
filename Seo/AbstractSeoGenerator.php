@@ -33,4 +33,20 @@ abstract class AbstractSeoGenerator implements RenderableInterface
      * @return $this
      */
     abstract public function fromResource($resource);
+
+    /**
+     * @return string
+     */
+    public function render()
+    {
+        return $this->tagBuilder->render();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
+    }
 }
