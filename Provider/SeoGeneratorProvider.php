@@ -17,7 +17,7 @@ class SeoGeneratorProvider
     protected $generators = [];
 
     /**
-     * SeoGeneratorChain constructor.
+     * SeoGeneratorProvider constructor.
      *
      * @param array $generators
      */

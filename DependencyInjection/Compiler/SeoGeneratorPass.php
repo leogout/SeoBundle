@@ -2,6 +2,7 @@
 
 namespace Leogout\Bundle\SeoBundle\DependencyInjection\Compiler;
 
+use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
