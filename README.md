@@ -1,11 +1,10 @@
 # LeogoutSeoBundle
 **WARNING**: This bundle is currently under development, things will change fast. Do not use in production.
+This bundle provides a simple and flexible API to manage _search engine optimization_ (SEO) tags in your application.
+Its main goal is to make it simple for you to manage the most common **meta**, **open graph** and **twitter card** tags
+and to let you configure less common ones with ease.
 
-This bundle provides a simple and flexible API to manage SEO tags in your application.
-
-Its main goal is to make it simple for you to manage the most common **meta**, **open graph** and **twitter card** tags and to let you configure les common ones with ease.
-
-### Installation
+## Installation
 Register the bundle in your AppKernel:
 ```php
 class AppKernel extends Kernel
@@ -20,23 +19,28 @@ class AppKernel extends Kernel
 }
 ```
 
-@todo: Make all configurations optionnal
+## Configuration
 
+These configuration values are the defaults used to render your tags.
+See the next section to learn how to override them dynamically.
 
+There are four sections in the config:
+* `general`: The _global_ configuration. Its values are shared among the other as defaults.
+* `basic`: A set of the most common SEO tags.
+* `og`: A set of _open graph_ tags based on http://ogp.me/.
+* `twitter`: A set of _twitter card_ tags based on https://dev.twitter.com/cards/types
 
+See "Configuration reference" to get the whole configuration.
 
-### From the config
-_**NOTE**: See the configuration as a default set of tags. Your SEO tags are likely to change over your app depending on your datas._
-
-Configure the bundle in your `config.yml`:
+**In your `config.yml`:**
 ```yml
 leogout_seo:
-    general: # This will be shared between the basic, open graph and twitter config
+    general:
         title: Default title
         description: Default description.
         image: http://images.com/poneys/12/large # This one is shared by open graph and twitter only
     basic:
-        title: Awesome title # Will override the default title
+        title: Awesome title
         keywords: default, keywords
     og:
         type: website
@@ -45,7 +49,8 @@ leogout_seo:
         card: summary
         site: '@leogoutt'
 ```
-Then use it in twig (usually in some `<head></head>` tags):
+
+**In your view:**
 ```twig
 <head>
     {{ leogout_seo('basic') }}
@@ -54,7 +59,7 @@ Then use it in twig (usually in some `<head></head>` tags):
 </head>
 ```
 
-Which will result in:
+**The result:**
 ```html
 <head>
     <title>Awesome title</title>
@@ -72,14 +77,38 @@ Which will result in:
 </head>
 ```
 
+## Setting values dynamically
 
+You can get the `leogout_seo.generator.[basic|twitter|og]` as a service to set or override any values.
+Each value of the configuration can be overrided using a setter of the following form:
+`$this->get('leogout_seo.generator.` **[basic|twitter|og]** `')->set` **[config field name]** `(` **[value]** `)`
 
-### From a resource:
-You can configure your own model classes to let the built-in seo generators do all the work.
-Multiple _interfaces_ have been defined to help the generators guess which methods they can call to fill their tags.
-This is an exemple for the `leogout_seo.generator.basic` generator:
-#####In your resource:
+For example, if you want to change `title` and `robots` from `basic`, you can do this:
 ```php
+class DefaultController extends Controller
+{
+    public function indexAction()
+    {
+        $this->get('leogout_seo.generator.basic')
+            ->setTitle('Title set in controller')
+            ->setRobots(true, false); // they can be chained
+        
+        return $this->render('AppBundle:Default:index.html.twig');
+    }
+}
+```
+
+
+## Setting values from a resource
+
+You can configure your own model classes to let the seo generators do all the work thanks to the **fromResource()** method.
+Multiple interfaces are available to help the method guess which setters to call to fill the tags.
+
+This is an exemple for the `leogout_seo.generator.basic` generator:
+**In your resource:**
+```php
+use Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoInterface;
+
 class MyResource implements BasicSeoInterface
 {
     protected $name;
@@ -88,13 +117,24 @@ class MyResource implements BasicSeoInterface
 
     // ...Your logic
     
-    // These methods from BasicSeoInterface have to return strings or objects with a __toString() method.
-    public function getSeoTitle() { return $this->name; }
-    public function getSeoDescription(){ return substr($this->description, 0, 150); }
-    public function getSeoKeywords() { return implode(',', $this->tags); }
+    // These methods are from BasicSeoInterface and have to
+    // return a string (or an object with a __toString() method).
+    public function getSeoTitle()
+    {
+        return $this->name; 
+    }
+    public function getSeoDescription()
+    {
+        return $this->description; 
+    }
+    public function getSeoKeywords()
+    {
+        return implode(',', $this->tags); 
+    }
 }
 ```
-#####In your controller (or somewhere else):
+
+**In your controller:**
 ```php
 class MyController extends Controller
 {
@@ -105,7 +145,8 @@ class MyController extends Controller
             ->setName('Cool resource')
             ->setDescription('Some description')
             ->addKeyword('hey')
-            ->addKeyword('ho');
+            ->addKeyword('ho')
+            ->addKeyword('let's go!');
         
         $this->get('leogout_seo.generator.basic')->fromResource($myResource);
         
@@ -113,71 +154,43 @@ class MyController extends Controller
     }
 }
 ```
-#####In your views:
+
+**In your view:**
 ```twig
 <head>
     {{ leogout_seo('basic') }}
 </head>
 ```
 
-#####The result:
+**The result:**
 ```html
 <head>
     <title>Cool resource</title>
     <meta name="description" content="Some description" />
-    <meta name="keywords" content="hey,ho" />
+    <meta name="keywords" content="hey,ho,let's go!" />
 </head>
 ```
 
-There are **three** different interfaces, one for each generator:
+There are **three** main interfaces, one for each generator:
 * `BasicSeoInterface` for `leogout_seo.generator.basic`
 * `OgSeoInterface` for `leogout_seo.generator.og`
 * `TwitterSeoInterface` for `leogout_seo.generator.twitter`
 
-These three interfaces extends _simpler interfaces_ which you can also inplement.
-As an example, if you only have a meta description on your resource, you can implement `DescriptionSeoInterface` only, to provide a description alone:
-#####In your resource:
-```php
-class MyResource implements DescriptionSeoInterface
-{
-    protected $description;
-    //...
-    public function getSeoDescription(){ return substr($this->description, 0, 150); }
-}
-```
+These interfaces extends _simpler interfaces_ which you can inplement instead or additionnally.
+For example, if you only have a meta description on your resource, you can implement `DescriptionSeoInterface` only to provide a description alone.
+This is the list of the different interfaces and what they extends:
 
-The list of the different interfaces and what they extends:
 |                     | TitleSeoInterface | DescriptionSeoInterface | KeywordsSeoInterface | ImageSeoInterface |
-|                     | `->getSeoTitle()` | `->getSeoDescription()` | `->getSeoKeywords()` | `->getSeoImage()` |
-|---------------------|-------------------|-------------------------|----------------------|-------------------|
+| ------------------- |:-----------------:|:-----------------------:|:--------------------:|:-----------------:|
 | BasicSeoInterface   |         X         |            X            |           X          |                   |
 | OgSeoInterface      |         X         |            X            |                      |         X         |
 | TwitterSeoInterface |         X         |            X            |                      |         X         |
 
 
+## Advanced usage
 
-
-### From the generator itself
-You can get the `leogout_seo.generator.[basic|twitter|og]` as a service to set or override any values:
-```php
-class DefaultController extends Controller
-{
-    public function indexAction()
-    {
-        $this->get('leogout_seo.generator.basic')
-            ->setTitle('Title set in controller')
-            ->setRobots(true, false);
-        
-        return $this->render('AppBundle:Default:index.html.twig');
-    }
-}
-```
-
-
-
-### Advanced usage
-LeogoutSeoBundle provides classes to create your own SEO tags and providers.
-First, you have to create a seo generator which extends the AbstractSeoGenerator:
+If the built-in generators don't suit your needs, LeogoutSeoBundle provides a way to create your own SEO generators.
+First, you have to create a class that extends the AbstractSeoGenerator class:
 ```php
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 
@@ -200,7 +213,8 @@ class MyTagsGenerator extends AbstractSeoGenerator
 }
 ```
 
-Then, register it as a service and add it a `leogout_seo.generator` tag ans a custom tag:
+Then, register it as a service and add it a `leogout_seo.generator` tag and a custom alias.
+Don't forget the `@leogout_seo.builder` dependency:
 ```yaml
 services:
     app.seo_generator.my_tags:
@@ -209,8 +223,9 @@ services:
         tags: { name: leogout_seo.generator, alias: my_tags }
 ```
 
-That's it, now you can use it like the others:
-#####In your controller (or somewhere else):
+That's it, now you can use it alongside the others:
+
+**In your controller:**
 ```php
 class MyController extends Controller
 {
@@ -222,20 +237,22 @@ class MyController extends Controller
     }
 }
 ```
-#####In your view:
+
+**In your view:**
 ```twig
 <head>
     {{ leogout_seo('my_tags') }}
 </head>
 ```
-#####Result:
+
+**Result:**
 ```html
 <head>
     <meta name="myAwesomeTag" content="cool" />
 </head>
 ```
 
-### Configuration reference
+## Configuration reference
 ```yml
 leogout_seo:
     general:
@@ -264,7 +281,7 @@ leogout_seo:
         site: '@leogoutt' # optionnal
 ```
 
-### Contributing
+## Contributing
 If you want to contribute \(thank you!\) to this bundle, here are some guidelines for you:
 
 * Please respect the [Symfony guidelines](http://symfony.com/doc/current/contributing/code/standards.html)
@@ -273,12 +290,10 @@ If you want to contribute \(thank you!\) to this bundle, here are some guideline
 * You add a new feature
 * You see code that works but isn't covered by any tests \(there is a special place in heaven for you\)
 
-### Todo
-* Install travis ci
+## Todo
+* Make all configurations optionnal
+* Render all generators if no generator alias is provided
 * Packagist
-* First realease
-* OpenGraph: http://ogp.me/
-* TwitterCard: https://dev.twitter.com/cards/types
 
-### Thanks
+## Thanks
 Many thanks to the [ARCANEDEV/SEO-Helper](https://github.com/ARCANEDEV/SEO-Helper) which authorized me to take some ideas from their library and to [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) which inspired me for the Providers APIs.
