@@ -53,11 +53,12 @@ leogout_seo:
 **In your view:**
 ```twig
 <head>
-    {{ leogout_seo('basic') }}
-    {{ leogout_seo('og') }}
-    {{ leogout_seo('twitter') }}
+    {{ leogout_seo() }}
 </head>
 ```
+**NOTE:** _You can provide a generator name to the `leogout_seo()` twig method to render it specifically.
+For example, to render the `basic` seo generator, you can use `leogout_seo('basic')`._
+
 
 **The result:**
 ```html
@@ -81,7 +82,6 @@ leogout_seo:
 However, if you want to use the associated generators without configuring any default values 
 (or configuring only the general ones), you can use this notation:_
 
-**In your `config.yml`:**
 ```yml
 leogout_seo:
    general:
@@ -308,7 +308,6 @@ If you want to contribute \(thank you!\) to this bundle, here are some guideline
     * You see code that works but isn't covered by any tests \(there is a special place in heaven for you\)
 
 ## Todo
-* Render all generators if no generator alias is provided
 * Packagist
 
 ## Thanks
