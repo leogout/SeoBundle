@@ -2,8 +2,8 @@
 
 namespace Leogout\Bundle\SeoBundle\Twig;
 
+use Leogout\Bundle\SeoBundle\Model\RenderableInterface;
 use Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider;
-use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 
 /**
  * Description of SeoExtension.
@@ -42,9 +42,17 @@ class SeoExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function seo($alias)
+    public function seo($alias = null)
     {
-        return $this->generatorProvider->get($alias)->render();
+        if (null !== $alias) {
+            return $this->generatorProvider->get($alias)->render();
+        }
+
+        return implode(PHP_EOL,
+            array_map(function (RenderableInterface $tag) {
+                return $tag->render();
+            }, $this->generatorProvider->getAll())
+        );
     }
 
     /**

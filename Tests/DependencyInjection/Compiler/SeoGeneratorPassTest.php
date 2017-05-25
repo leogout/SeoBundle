@@ -4,7 +4,6 @@ namespace Tests\Leogout\Bundle\SeoBundle\DependencyInjection\Compiler;
 
 use Leogout\Bundle\SeoBundle\DependencyInjection\Compiler\SeoGeneratorPass;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Description of SeoGeneratorPassTest.

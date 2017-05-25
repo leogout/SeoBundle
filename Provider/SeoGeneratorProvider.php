@@ -41,6 +41,14 @@ class SeoGeneratorProvider
     }
 
     /**
+     * @return AbstractSeoGenerator[]
+     */
+    public function getAll()
+    {
+        return $this->generators;
+    }
+
+    /**
      * @param $alias
      *
      * @return bool
