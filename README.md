@@ -77,6 +77,23 @@ leogout_seo:
 </head>
 ```
 
+**NOTE:** _By default, the SEO generators aren't loaded if you don't require them in the config.
+However, if you want to use the associated generators without configuring any default values 
+(or configuring only the general ones), you can use this notation:_
+
+**In your `config.yml`:**
+```yml
+leogout_seo:
+   general:
+       title: Default title
+       description: Default description.
+       image: http://images.com/poneys/12/large # This one is shared by open graph and twitter only
+   basic: ~
+   og: ~
+   twitter: ~
+```
+
+
 ## Setting values dynamically
 
 You can get the `leogout_seo.generator.[basic|twitter|og]` as a service to set or override any values.
@@ -282,18 +299,17 @@ leogout_seo:
 ```
 
 ## Contributing
-If you want to contribute \(thank you!\) to this bundle, here are some guidelines for you:
+If you want to contribute \(thank you!\) to this bundle, here are some guidelines:
 
 * Please respect the [Symfony guidelines](http://symfony.com/doc/current/contributing/code/standards.html)
 * Test everything! Please add tests cases to the tests/ directory when:
-* You fix a bug that wasn't covered before
-* You add a new feature
-* You see code that works but isn't covered by any tests \(there is a special place in heaven for you\)
+    * You fix a bug that wasn't covered before
+    * You add a new feature
+    * You see code that works but isn't covered by any tests \(there is a special place in heaven for you\)
 
 ## Todo
-* Make all configurations optionnal
 * Render all generators if no generator alias is provided
 * Packagist
 
 ## Thanks
-Many thanks to the [ARCANEDEV/SEO-Helper](https://github.com/ARCANEDEV/SEO-Helper) which authorized me to take some ideas from their library and to [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) which inspired me for the Providers APIs.
+Many thanks to the [ARCANEDEV/SEO-Helper](https://github.com/ARCANEDEV/SEO-Helper) who authorized me to take some ideas from their library and to [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) which inspired me for the Providers APIs.

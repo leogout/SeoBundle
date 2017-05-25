@@ -42,7 +42,7 @@ class LeogoutSeoExtension extends Extension
      */
     private function loadIfConfigured($configName, ContainerBuilder $container, XmlFileLoader $loader, array $config)
     {
-        if (empty($config[$configName])) {
+        if (!isset($config[$configName])) {
             return;
         }
         $config = array_merge($config['general'], $config[$configName]);
