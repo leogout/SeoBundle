@@ -15,16 +15,6 @@ class TitleTag implements RenderableInterface
     protected $content;
 
     /**
-     * @var string
-     */
-    protected $prefix;
-
-    /**
-     * @var string
-     */
-    protected $separator;
-
-    /**
      * @return string
      */
     public function getContent()
@@ -47,49 +37,9 @@ class TitleTag implements RenderableInterface
     /**
      * @return string
      */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * @param string $prefix
-     *
-     * @return $this
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = (string) $prefix;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSeparator()
-    {
-        return $this->separator;
-    }
-
-    /**
-     * @param string $separator
-     *
-     * @return $this
-     */
-    public function setSeparator($separator)
-    {
-        $this->separator = (string) $separator;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function render()
     {
-        return sprintf('<title>%s%s%s</title>', $this->getPrefix(), $this->getSeparator(), $this->getContent());
+        return sprintf('<title>%s</title>', $this->getContent());
     }
 
     /**

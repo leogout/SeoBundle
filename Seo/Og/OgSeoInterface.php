@@ -2,6 +2,8 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Og;
 
+use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\DescriptionSeoInterface;
 use Leogout\Bundle\SeoBundle\Seo\ImageSeoInterface;
 
 /**

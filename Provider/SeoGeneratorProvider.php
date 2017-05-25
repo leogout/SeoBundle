@@ -17,7 +17,7 @@ class SeoGeneratorProvider
     protected $generators = [];
 
     /**
-     * SeoGeneratorChain constructor.
+     * SeoGeneratorProvider constructor.
      *
      * @param array $generators
      */
@@ -29,7 +29,7 @@ class SeoGeneratorProvider
     /**
      * @param string $alias
      *
-     * @return array
+     * @return AbstractSeoGenerator
      */
     public function get($alias)
     {
@@ -38,6 +38,14 @@ class SeoGeneratorProvider
         }
 
         return $this->generators[$alias];
+    }
+
+    /**
+     * @return AbstractSeoGenerator[]
+     */
+    public function getAll()
+    {
+        return $this->generators;
     }
 
     /**

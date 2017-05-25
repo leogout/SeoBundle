@@ -15,10 +15,7 @@ class TitleTagTest extends TestCase
     public function testRender()
     {
         $titleTag = new TitleTag();
-        $titleTag
-            ->setContent('Site')
-            ->setPrefix('Awesonme')
-            ->setSeparator(' | ');
+        $titleTag->setContent('Awesonme | Site');
 
         $this->assertEquals(
             '<title>Awesonme | Site</title>',

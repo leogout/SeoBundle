@@ -64,13 +64,13 @@ class MetaTagTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Meta tag of type "unknownType" doesn't exist. Existing types are: name, property and http-equiv.
+     */
     public function testSetUnknownType()
     {
         $metaTag = new MetaTag();
-
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Meta tag of type "unknownType" doesn\'t exist. Existing types are: name, property and http-equiv.');
-
         $metaTag->setType('unknownType');
     }
 }

@@ -12,7 +12,7 @@
         <service id="leogout_seo.generator.basic" class="Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoGenerator">
             <argument id="leogout_seo.builder" type="service"/>
             <configurator service="leogout_seo.configurator.basic" method="configure" />
-            <tag name="leogout_seo.generator" alias="base"/>
+            <tag name="leogout_seo.generator" alias="basic"/>
         </service>
     </services>
 </container>

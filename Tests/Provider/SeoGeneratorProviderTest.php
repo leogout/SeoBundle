@@ -30,19 +30,29 @@ class SeoGeneratorProviderTest extends TestCase
         ]);
     }
 
-    /**
-     * @param
-     */
     public function testGetGenerator()
     {
         $this->assertInstanceOf(
             BasicSeoGenerator::class,
             $this->provider->get('basic')
         );
+    }
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The SEO generator with alias "undefined" is not defined.');
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The SEO generator with alias "undefined" is not defined.
+     */
+    public function testGetUndefinedGenerator()
+    {
         $this->provider->get('undefined');
+    }
+
+    public function testGetAllGenerators()
+    {
+        $this->assertInstanceOf(
+            BasicSeoGenerator::class,
+            $this->provider->getAll()['basic']
+        );
     }
 
     /**

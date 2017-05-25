@@ -2,7 +2,6 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Basic;
 
-use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Model\TitleTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
@@ -18,15 +17,13 @@ use Leogout\Bundle\SeoBundle\Seo\KeywordsSeoInterface;
 class BasicSeoGenerator extends AbstractSeoGenerator
 {
     /**
-     * @param string      $content
-     * @param string|null $separator
-     * @param string|null $prefix
+     * @param string $content
      *
      * @return $this
      */
-    public function setTitle($content, $separator = null, $prefix = null)
+    public function setTitle($content)
     {
-        $this->tagBuilder->setTitle($content, $separator, $prefix);
+        $this->tagBuilder->setTitle($content);
 
         return $this;
     }
@@ -138,21 +135,5 @@ class BasicSeoGenerator extends AbstractSeoGenerator
         }
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function render()
-    {
-        return $this->tagBuilder->render();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
     }
 }

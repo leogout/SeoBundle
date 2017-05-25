@@ -2,7 +2,6 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Twitter;
 
-use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
 use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
@@ -152,21 +151,5 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
             ->setContent((string) $value);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function render()
-    {
-        return $this->tagBuilder->render();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
     }
 }
