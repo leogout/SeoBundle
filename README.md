@@ -7,6 +7,10 @@ and to let you configure less common ones with ease.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/leogout/SeoBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/leogout/SeoBundle/?branch=develop)
 
 ## Installation
+Install the bundle with the command:
+
+`composer require leogout/seo-bundle`
+
 Register the bundle in your AppKernel:
 ```php
 class AppKernel extends Kernel
