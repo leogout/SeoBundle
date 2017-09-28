@@ -4,7 +4,7 @@ Its main goal is to make it simple for you to manage the most common **meta**, *
 and to let you configure less common ones with ease.
 
 [![Build Status](https://travis-ci.org/leogout/SeoBundle.svg?branch=master)](https://travis-ci.org/leogout/SeoBundle)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/leogout/SeoBundle/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/leogout/SeoBundle/?branch=develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/leogout/SeoBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/leogout/SeoBundle/?branch=master)
 
 ## Installation
 Install the bundle with the command:
