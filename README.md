@@ -108,7 +108,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $this->get('leogout_seo.generator.basic')
+        $this->get('leogout_seo.provider.generator')->get('basic')
             ->setTitle('Title set in controller')
             ->setRobots(true, false); // they can be chained
         
@@ -167,7 +167,7 @@ class MyController extends Controller
             ->addKeyword('ho')
             ->addKeyword('let's go!');
         
-        $this->get('leogout_seo.generator.basic')->fromResource($myResource);
+        $this->get('leogout_seo.provider.generator')->get('basic')->fromResource($myResource);
         
         return $this->render('MyController:Default:index.html.twig');
     }

@@ -34,7 +34,7 @@ class OgSeoConfigurator extends AbstractSeoConfigurator
             $generator->setType($type);
         }
         if (null !== $url = $this->getConfig('url')) {
-            $generator->setImage($url);
+            $generator->setUrl($url);
         }
     }
 }
