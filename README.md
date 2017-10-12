@@ -102,9 +102,9 @@ leogout_seo:
 
 ## Setting values dynamically
 
-You can get the `leogout_seo.generator.[basic|twitter|og]` as a service to set or override any values.
+You can get the `'[basic|twitter|og]` as a service to set or override any values.
 Each value of the configuration can be overrided using a setter of the following form:
-`$this->get('leogout_seo.generator.` **[basic|twitter|og]** `')->set` **[config field name]** `(` **[value]** `)`
+`$this->get('leogout_seo.provider.generator')->get('` **[basic|twitter|og]** `')->set` **[config field name]** `(` **[value]** `)`
 
 For example, if you want to change `title` and `robots` from `basic`, you can do this:
 ```php
@@ -112,7 +112,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $this->get('leogout_seo.generator.basic')
+        $this->get('leogout_seo.provider.generator')->get('basic')
             ->setTitle('Title set in controller')
             ->setRobots(true, false); // they can be chained
         
@@ -127,7 +127,7 @@ class DefaultController extends Controller
 You can configure your own model classes to let the seo generators do all the work thanks to the **fromResource()** method.
 Multiple interfaces are available to help the method guess which setters to call to fill the tags.
 
-This is an exemple for the `leogout_seo.generator.basic` generator:
+This is an exemple for the `basic` generator:
 **In your resource:**
 ```php
 use Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoInterface;
@@ -171,7 +171,7 @@ class MyController extends Controller
             ->addKeyword('ho')
             ->addKeyword('let's go!');
         
-        $this->get('leogout_seo.generator.basic')->fromResource($myResource);
+        $this->get('leogout_seo.provider.generator')->get('basic')->fromResource($myResource);
         
         return $this->render('MyController:Default:index.html.twig');
     }
@@ -195,9 +195,9 @@ class MyController extends Controller
 ```
 
 There are **three** main interfaces, one for each generator:
-* `BasicSeoInterface` for `leogout_seo.generator.basic`
-* `OgSeoInterface` for `leogout_seo.generator.og`
-* `TwitterSeoInterface` for `leogout_seo.generator.twitter`
+* `BasicSeoInterface` for `basic`
+* `OgSeoInterface` for `og`
+* `TwitterSeoInterface` for `twitter`
 
 These interfaces extends _simpler interfaces_ which you can inplement instead or additionnally.
 For example, if you only have a meta description on your resource, you can implement `DescriptionSeoInterface` only to provide a description alone.
@@ -254,7 +254,7 @@ class MyController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $this->get('app.seo_generator.my_tags')->setMyTag('cool');
+        $this->get('leogout_seo.provider.generator')->get('my_tags')->setMyTag('cool');
         
         return $this->render('MyController:Default:index.html.twig');
     }
