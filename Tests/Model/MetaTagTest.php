@@ -17,7 +17,7 @@ class MetaTagTest extends TestCase
         $metaTag = new MetaTag();
         $metaTag
             ->setType(MetaTag::NAME_TYPE)
-            ->setValue('keywords')
+            ->setTagName('keywords')
             ->setContent('your, tags');
 
         $this->assertEquals(
@@ -31,7 +31,7 @@ class MetaTagTest extends TestCase
         $metaTag = new MetaTag();
         $metaTag
             ->setType(MetaTag::PROPERTY_TYPE)
-            ->setValue('og:title')
+            ->setTagName('og:title')
             ->setContent('My awesome site');
 
         $this->assertEquals(
@@ -45,7 +45,7 @@ class MetaTagTest extends TestCase
         $metaTag = new MetaTag();
         $metaTag
             ->setType(MetaTag::HTTP_EQUIV_TYPE)
-            ->setValue('Cache-Control')
+            ->setTagName('Cache-Control')
             ->setContent('no-cache');
 
         $this->assertEquals(
@@ -54,14 +54,27 @@ class MetaTagTest extends TestCase
         );
     }
 
+    public function testRenderEmptyString()
+    {
+        $metaTag = new MetaTag();
+        $metaTag
+            ->setType(MetaTag::PROPERTY_TYPE)
+            ->setTagName('og:determiner')
+            ->setContent('')
+        ;
+
+        // This is a valid use case, according to the opengraph specs an empty string is a valid value for determiner.
+        $this->assertEquals(
+            '<meta property="og:determiner" content="" />',
+            $metaTag->render()
+        );
+    }
+
     public function testRenderNothing()
     {
         $metaTag = new MetaTag();
 
-        $this->assertEquals(
-            '<meta name="" content="" />',
-            $metaTag->render()
-        );
+        $this->assertEquals('', $metaTag->render());
     }
 
     /**

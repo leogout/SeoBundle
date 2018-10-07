@@ -21,12 +21,20 @@ class MetaTag implements RenderableInterface
     /**
      * @var string
      */
-    protected $value;
+    protected $tagName;
 
     /**
      * @var string
      */
     protected $content;
+
+    /**
+     * If true, render one metadata tag for each value if the value is an array.
+     * When false, we'll assume that the rendered metadata tag expects comma separated values.
+     *
+     * @var bool
+     */
+    protected $eachValueAsSeparateTag = true;
 
     /**
      * @return string
@@ -55,25 +63,47 @@ class MetaTag implements RenderableInterface
     /**
      * @return string
      */
-    public function getValue()
+    public function getTagName()
     {
-        return $this->value;
+        return $this->tagName;
     }
 
     /**
-     * @param string $value
+     * @param string $tagName
      *
      * @return $this
      */
-    public function setValue($value)
+    public function setTagName($tagName)
     {
-        $this->value = (string) $value;
+        $this->tagName = (string) $tagName;
 
         return $this;
     }
 
     /**
+     * @deprecated  use getTagName()
+     *
      * @return string
+     */
+    public function getValue()
+    {
+        return $this->getTagName();
+    }
+
+    /**
+     * @deprecated  use setTagName()
+     *
+     * @param $tagName
+     *
+     * @return MetaTag
+     */
+    public function setValue($tagName)
+    {
+        return $this->setTagName($tagName);
+    }
+
+    /**
+     * @return string[]|string
      */
     public function getContent()
     {
@@ -81,13 +111,13 @@ class MetaTag implements RenderableInterface
     }
 
     /**
-     * @param string $content
+     * @param string[]|string $content
      *
      * @return $this
      */
     public function setContent($content)
     {
-        $this->content = (string) $content;
+        $this->content = $content;
 
         return $this;
     }
@@ -109,7 +139,53 @@ class MetaTag implements RenderableInterface
      */
     public function render()
     {
-        return sprintf('<meta %s="%s" content="%s" />', $this->getType(), $this->getValue(), $this->getContent());
+        $tagContent = $this->getContent();
+        if ($tagContent === null) {
+            return '';
+        }
+
+        // Multiple values?
+        if (is_array($tagContent)) {
+            // Render one metadata tag for each value
+            if ($this->isEachValueAsSeparateTag()) {
+                $rendered = '';
+                foreach ($tagContent as $tagValue) {
+                    $rendered .= sprintf(
+                        '<meta %s="%s" content="%s" />',
+                        $this->getType(),
+                        $this->getTagName(),
+                        $tagValue
+                    );
+                }
+
+                return $rendered;
+            } else {
+                // Assume tag expects comma separated value
+                $tagContent = implode(', ', $tagContent);
+            }
+        }
+
+        return sprintf('<meta %s="%s" content="%s" />', $this->getType(), $this->getTagName(), (string) $tagContent);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEachValueAsSeparateTag()
+    {
+        return $this->eachValueAsSeparateTag;
+    }
+
+    /**
+     * @param bool $eachValueAsSeparateTag
+     *
+     * @return $this
+     */
+    public function setEachValueAsSeparateTag($eachValueAsSeparateTag)
+    {
+        $this->eachValueAsSeparateTag = $eachValueAsSeparateTag;
+
+        return $this;
     }
 
     /**
