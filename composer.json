@@ -1,5 +1,5 @@
 {
-  "name":         "leogout/seo-bundle",
+  "name":         "leadtech/seo-bundle",
   "description":  "A Symfony bundle to generate SEO meta tags.",
   "keywords":     ["seo"],
   "type":         "symfony-bundle",
@@ -8,13 +8,17 @@
     {
       "name":     "leogout",
       "email":    "leogout@gmail.com"
+    },
+    {
+      "name":     "Daan Biesterbos",
+      "email":    "d.biesterbos@leadtech.nl"
     }
   ],
   "require":      {
-    "symfony/framework-bundle": "~2.8|~3.0"
+    "symfony/framework-bundle": "~2.8|~3.0|~4.0"
   },
   "require-dev":  {
-    "symfony/phpunit-bridge": "~2.7|~3.0",
+    "symfony/phpunit-bridge": "~2.7|~3.0|~4.0",
     "phpunit/phpunit": "^5.0"
   },
   "autoload":     {

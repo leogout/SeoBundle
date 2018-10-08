@@ -66,20 +66,23 @@ class TagBuilder implements RenderableInterface
     }
 
     /**
-     * @param string      $name
+     * @param string $name
      * @param string|null $type
      * @param string|null $value
      * @param string|null $content
+     * @param bool $eachValueAsSeparateTag
      *
      * @return MetaTag
      */
-    public function addMeta($name, $type = MetaTag::NAME_TYPE, $value = null, $content = null)
+    public function addMeta($name, $type = MetaTag::NAME_TYPE, $value = null, $content = null, $eachValueAsSeparateTag = true)
     {
         return $this->metas[$name] = $this->tagFactory
             ->createMeta()
             ->setType($type)
-            ->setValue($value)
-            ->setContent($content);
+            ->setTagName($value)
+            ->setContent($content)
+            ->setEachValueAsSeparateTag((bool) $eachValueAsSeparateTag)
+            ;
     }
 
     /**

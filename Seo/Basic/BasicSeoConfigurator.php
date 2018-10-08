@@ -36,5 +36,11 @@ class BasicSeoConfigurator extends AbstractSeoConfigurator
         if (null !== $canonical = $this->getConfig('canonical')) {
             $generator->setCanonical($canonical);
         }
+        if (null !== $canonical = $this->getConfig('paginate_previous')) {
+            $generator->setPreviousUrl($canonical);
+        }
+        if (null !== $canonical = $this->getConfig('paginate_next')) {
+            $generator->setNextUrl($canonical);
+        }
     }
 }

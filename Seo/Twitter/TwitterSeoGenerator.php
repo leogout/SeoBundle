@@ -4,6 +4,10 @@ namespace Leogout\Bundle\SeoBundle\Seo\Twitter;
 
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\ImageAggregateInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\ImageInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\ResourceInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\WebsiteInterface;
 use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
 use Leogout\Bundle\SeoBundle\Seo\DescriptionSeoInterface;
 use Leogout\Bundle\SeoBundle\Seo\ImageSeoInterface;
@@ -124,6 +128,26 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
             $this->setImage($resource->getSeoImage());
         }
 
+        // Resource
+        if ($resource instanceof ResourceInterface) {
+            $this->setTitle($resource->getTitle());
+            $this->setDescription($resource->getDescription());
+        }
+
+        // Website
+        if ($resource instanceof WebsiteInterface) {
+            $this->setSite($resource->getSiteName());
+        }
+
+        // Image
+        $image = $resource;
+        if ($image instanceof ImageAggregateInterface) {
+            $image = $image->getImage();
+        }
+        if ($image instanceof ImageInterface) {
+            $this->setImage($image->getSecureUrl() ?: $image->getUrl());
+        }
+
         return $this;
     }
 
@@ -147,7 +171,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
     {
         $this->tagBuilder->addMeta($type)
             ->setType(MetaTag::NAME_TYPE)
-            ->setValue($type)
+            ->setTagName($type)
             ->setContent((string) $value);
 
         return $this;

@@ -5,6 +5,8 @@ namespace Leogout\Bundle\SeoBundle\Seo\Basic;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Model\TitleTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\PaginationAwareInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\ResourceInterface;
 use Leogout\Bundle\SeoBundle\Seo\TitleSeoInterface;
 use Leogout\Bundle\SeoBundle\Seo\DescriptionSeoInterface;
 use Leogout\Bundle\SeoBundle\Seo\KeywordsSeoInterface;
@@ -45,7 +47,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     {
         $this->tagBuilder->addMeta('description')
             ->setType(MetaTag::NAME_TYPE)
-            ->setValue('description')
+            ->setTagName('description')
             ->setContent((string) $content);
 
         return $this;
@@ -68,7 +70,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     {
         $this->tagBuilder->addMeta('keywords')
             ->setType(MetaTag::NAME_TYPE)
-            ->setValue('keywords')
+            ->setTagName('keywords')
             ->setContent((string) $keywords);
 
         return $this;
@@ -95,7 +97,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
 
         $this->tagBuilder->addMeta('robots')
             ->setType(MetaTag::NAME_TYPE)
-            ->setValue('robots')
+            ->setTagName('robots')
             ->setContent(sprintf('%s, %s', $index, $follow));
 
         return $this;
@@ -116,6 +118,50 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     }
 
     /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setPreviousUrl($url)
+    {
+        $this->tagBuilder->addLink('previousUrl')
+            ->setHref((string) $url)
+            ->setRel('prev');
+
+        return $this;
+    }
+
+    /**
+     * @return \Leogout\Bundle\SeoBundle\Model\LinkTag|null
+     */
+    public function getPreviousUrl()
+    {
+        return $this->tagBuilder->getLink('previousUrl');
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setNextUrl($url)
+    {
+        $this->tagBuilder->addLink('nextUrl')
+            ->setHref((string) $url)
+            ->setRel('next');
+
+        return $this;
+    }
+
+    /**
+     * @return \Leogout\Bundle\SeoBundle\Model\LinkTag|null
+     */
+    public function getNextUrl()
+    {
+        return $this->tagBuilder->getLink('nextUrl');
+    }
+
+    /**
      * Generate seo tags from given resource.
      *
      * @param TitleSeoInterface|DescriptionSeoInterface|KeywordsSeoInterface $resource
@@ -125,13 +171,31 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     public function fromResource($resource)
     {
         if ($resource instanceof TitleSeoInterface) {
+            // backward compatibility
             $this->setTitle($resource->getSeoTitle());
         }
         if ($resource instanceof DescriptionSeoInterface) {
+            // backward compatibility
             $this->setDescription($resource->getSeoDescription());
         }
         if ($resource instanceof KeywordsSeoInterface) {
+            // backward compatibility
             $this->setKeywords($resource->getSeoKeywords());
+        }
+
+        // Pagination
+        if ($resource instanceof PaginationAwareInterface) {
+            $this->setPreviousUrl($resource->getPreviousUrl());
+            $this->setNextUrl($resource->getPreviousUrl());
+        }
+
+        // Resource
+        if ($resource instanceof ResourceInterface) {
+            $this->setTitle($resource->getTitle());
+            $this->setDescription($resource->getDescription());
+            if ($keywords = $resource->getKeywords()) {
+                $this->setKeywords((is_array($keywords)) ? $keywords : [$keywords]);
+            }
         }
 
         return $this;
