@@ -48,9 +48,38 @@ leogout_seo:
     basic:
         title: Awesome title
         keywords: default, keywords
+        canonical: ~           # Define dynamically in controller
+        pagination_previous: ~ # Define dynamically in controller
+        pagination_next    : ~ # Define dynamically in controller
     og:
+        # General
+        site_name: My website
         type: website
         url: http://test.com/articles
+        determiner: auto
+        
+        # Image
+        image: http://images.com/poneys/12/large 
+        image_secure_url: https://images.com/poneys/12/large 
+        image_type: image/png 
+        image_width: 400
+        image_width: 383
+        
+        # Audio
+        audio: http://sounds.com/screaming-goats
+        audio_type: audio/mp3
+        audio_secure_url: https://sounds.com/screaming-goats 
+        
+        # Video
+        video: http://videos.com/more-screaming-goats 
+        video_secure_url: https://videos.com/more-screaming-goats 
+        video_type: video/png 
+        video_width: 1200
+        video_width: 680
+              
+        # Locales
+        locale: en_US
+        alternate_locales: ['nl_NL', be_NL', 'be_FR']
     twitter:
         card: summary
         site: '@leogoutt'
@@ -72,10 +101,22 @@ For example, to render the `basic` seo generator, you can use `leogout_seo('basi
     <title>Awesome title</title>
     <meta name="description" content="Default description." />
     <meta name="keywords" content="default, keywords" />
+    
+    <meta name="og:site_name" content="My website" />
+    <meta name="og:type" content="website" />
     <meta name="og:title" content="Default title" />
     <meta name="og:description" content="Default description." />
     <meta name="og:image" content="http://test.com/articles" />
-    <meta name="og:type" content="website" />
+    <meta name="og:audio" content="http://sounds.com/screaming-goats" />
+    <meta name="og:audio:type" content="audio/mp3" />
+    <meta name="og:audio:secure_url" content="https://sounds.com/screaming-goats" />  
+    <meta name="og:video" content="http://videos.com/more-screaming-goats" />
+    <meta name="og:video:type" content="audio/mp3" />
+    <meta name="og:vide:secure_url" content="https://videos.com/more-screaming-goats" />
+    <meta name="og:locale" content="en_US" />
+    <meta name="og:locale:alternate" content="nl_NL" />
+    <meta name="og:locale:alternate" content="be_NL" />
+    <meta name="og:locale:alternate" content="be_FR" />
     <meta name="twitter:title" content="Default title" />
     <meta name="twitter:description" content="Default description." />
     <meta name="twitter:image" content="http://images.com/poneys/12/large" />
@@ -95,6 +136,19 @@ leogout_seo:
        description: Default description.
        image: http://images.com/poneys/12/large # This one is shared by open graph and twitter only
    basic: ~
+   og: ~
+   twitter: ~
+```
+
+**When you define default values for a provider, you must also specify the fields that you intent to set dynamically.** For example, if we specify a default
+value for the title and description we must also add the canonical field or the tag won't be rendered. A tag is never 
+rendered when the value NULL. To render the tag we will need to set the value dynamically.  
+```yml
+leogout_seo:
+   basic:
+       title: Default title
+       description: Default description.
+       canonical: ~
    og: ~
    twitter: ~
 ```
@@ -130,46 +184,42 @@ Multiple interfaces are available to help the method guess which setters to call
 This is an exemple for the `basic` generator:
 **In your resource:**
 ```php
-use Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\VideoInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\PageInterface;
+use Leogout\Bundle\SeoBundle\Seo\Stdlib\VideoAggregateInterface;
 
-class MyResource implements BasicSeoInterface
+
+class BlogPost implements PageInterface, VideoAggregateInterface
 {
-    protected $name;
-    protected $description;
-    protected $tags = [];
-
-    // ...Your logic
-    
-    // These methods are from BasicSeoInterface and have to
-    // return a string (or an object with a __toString() method).
-    public function getSeoTitle()
-    {
-        return $this->name; 
-    }
-    public function getSeoDescription()
-    {
-        return $this->description; 
-    }
-    public function getSeoKeywords()
-    {
-        return implode(',', $this->tags); 
-    }
+   /**
+    * @return VideoInterface
+    */
+    public function getVideo() {} 
 }
 ```
 
 **In your controller:**
 ```php
-class MyController extends Controller
+class BlogController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $myResource = new MyResource();
-        $myResource
-            ->setName('Cool resource')
-            ->setDescription('Some description')
-            ->addKeyword('hey')
-            ->addKeyword('ho')
-            ->addKeyword('let's go!');
+        // An example of how resources can be used. Look into the Stdlib folder to see which interfaces are currently
+        // supported. 
+        $post = new BlogPost();
+        $post
+            ->setTitle('10 things you did not know about goats')
+            ->setVideo(new class implements VideoInterface {
+                public function getVideoUrl() { /* ...some logic... */}
+                public function getVideoSecureUrl() { /* ...some logic... */}
+                public function getVideoType() { /* ...some logic... */}
+                public function getVideoWidth() { /* ...some logic... */}
+                public function getVideoHeight() { /* ...some logic... */}
+            })
+            ->setDescription('Skilled goats screaming passionately.')
+            ->addKeyword('goat')
+            ->addKeyword('screaming')
+            ->addKeyword('flat tire');
         
         $this->get('leogout_seo.provider.generator')->get('basic')->fromResource($myResource);
         
@@ -193,22 +243,6 @@ class MyController extends Controller
     <meta name="keywords" content="hey,ho,let's go!" />
 </head>
 ```
-
-There are **three** main interfaces, one for each generator:
-* `BasicSeoInterface` for `basic`
-* `OgSeoInterface` for `og`
-* `TwitterSeoInterface` for `twitter`
-
-These interfaces extends _simpler interfaces_ which you can inplement instead or additionnally.
-For example, if you only have a meta description on your resource, you can implement `DescriptionSeoInterface` only to provide a description alone.
-This is the list of the different interfaces and what they extends:
-
-|                     | TitleSeoInterface | DescriptionSeoInterface | KeywordsSeoInterface | ImageSeoInterface |
-| ------------------- |:-----------------:|:-----------------------:|:--------------------:|:-----------------:|
-| BasicSeoInterface   |         X         |            X            |           X          |                   |
-| OgSeoInterface      |         X         |            X            |                      |         X         |
-| TwitterSeoInterface |         X         |            X            |                      |         X         |
-
 
 ## Advanced usage
 
