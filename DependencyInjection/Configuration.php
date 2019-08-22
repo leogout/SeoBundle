@@ -18,8 +18,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('leogout_seo');
+        $treeBuilder = new TreeBuilder('leogout_seo');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->configureGeneralTree($rootNode);
         $this->configureBasicTree($rootNode);
