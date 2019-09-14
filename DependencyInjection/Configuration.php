@@ -19,7 +19,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('leogout_seo');
-        $rootNode = $treeBuilder->getRootNode();
+        // Keep compatibility with symfony/config < 4.2
+        if (\method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('leogout_seo');
+        }
 
         $this->configureGeneralTree($rootNode);
         $this->configureBasicTree($rootNode);
