@@ -116,6 +116,19 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     }
 
     /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setAmpHtml($url)
+    {
+        $this->tagBuilder->addLink('amphtml')
+            ->setHref((string) $url)
+            ->setRel('amphtml');
+        return $this;
+    }
+
+    /**
      * Generate seo tags from given resource.
      *
      * @param TitleSeoInterface|DescriptionSeoInterface|KeywordsSeoInterface $resource
