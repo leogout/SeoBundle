@@ -15,5 +15,8 @@
             <argument id="leogout_seo.provider.generator" type="service"/>
             <tag name="twig.extension"/>
         </service>
+
+        <!-- for autowiring -->
+        <service id="Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider" alias="leogout_seo.provider.generator" />
     </services>
 </container>

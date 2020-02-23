@@ -14,5 +14,8 @@
             <configurator service="leogout_seo.configurator.twitter" method="configure" />
             <tag name="leogout_seo.generator" alias="twitter"/>
         </service>
+
+        <!-- for autowiring -->
+        <service id="Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator" alias="leogout_seo.generator.twitter" />
     </services>
 </container>

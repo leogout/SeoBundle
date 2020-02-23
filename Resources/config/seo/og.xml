@@ -14,5 +14,8 @@
             <configurator service="leogout_seo.configurator.og" method="configure" />
             <tag name="leogout_seo.generator" alias="og"/>
         </service>
+
+        <!-- for autowiring -->
+        <service id="Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator" alias="leogout_seo.generator.og" />
     </services>
 </container>
