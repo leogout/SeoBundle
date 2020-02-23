@@ -76,11 +76,6 @@ class OgSeoGenerator extends AbstractSeoGenerator
      */
     public function setImage($content)
     {
-        $this->tagBuilder->addMeta('og:image')
-            ->setType(MetaTag::PROPERTY_TYPE)
-            ->setValue('og:image')
-            ->setContent((string) $content);
-
         return $this->set('og:image', $content);
     }
 
