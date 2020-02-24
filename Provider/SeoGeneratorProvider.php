@@ -17,13 +17,16 @@ class SeoGeneratorProvider
     protected $generators = [];
 
     /**
-     * SeoGeneratorProvider constructor.
+     * @param string $alias
+     * @param AbstractSeoGenerator $generator
      *
-     * @param array $generators
+     * @return self
      */
-    public function __construct(array $generators)
+    public function set(string $alias, AbstractSeoGenerator $generator)
     {
-        $this->generators = $generators;
+        $this->generators[$alias] = $generator;
+
+        return $this;
     }
 
     /**

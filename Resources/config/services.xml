@@ -5,9 +5,8 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="leogout_seo.provider.generator" class="Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider" public="true">
-            <argument type="collection"/>
-        </service>
+        <service id="leogout_seo.provider.generator" class="Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider" public="true" />
+
         <service id="leogout_seo.tag_factory" class="Leogout\Bundle\SeoBundle\Factory\TagFactory"/>
         <service id="leogout_seo.builder" class="Leogout\Bundle\SeoBundle\Builder\TagBuilder" shared="false">
             <argument id="leogout_seo.tag_factory" type="service"/>
@@ -16,5 +15,8 @@
             <argument id="leogout_seo.provider.generator" type="service"/>
             <tag name="twig.extension"/>
         </service>
+
+        <!-- for autowiring -->
+        <service id="Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider" alias="leogout_seo.provider.generator" />
     </services>
 </container>
