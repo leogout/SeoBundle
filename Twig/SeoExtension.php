@@ -5,12 +5,15 @@ namespace Leogout\Bundle\SeoBundle\Twig;
 use Leogout\Bundle\SeoBundle\Model\RenderableInterface;
 use Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
 /**
  * Description of SeoExtension.
  *
  * @author: leogout
  */
-class SeoExtension extends \Twig_Extension
+class SeoExtension extends AbstractExtension
 {
     /**
      * @var SeoGeneratorProvider
@@ -33,7 +36,7 @@ class SeoExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('leogout_seo', [$this, 'seo'], ['is_safe' => ['html']]),
+            new TwigFunction('leogout_seo', [$this, 'seo'], ['is_safe' => ['html']]),
         );
     }
 
