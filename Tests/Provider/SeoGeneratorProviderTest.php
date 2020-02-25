@@ -25,9 +25,9 @@ class SeoGeneratorProviderTest extends TestCase
         $tagBuilder = new TagBuilder(new TagFactory());
         $basicGenerator = new BasicSeoGenerator($tagBuilder);
 
-        $this->provider = new SeoGeneratorProvider([
-            'basic' => $basicGenerator,
-        ]);
+        $this->provider = new SeoGeneratorProvider();
+
+        $this->provider->set('basic', $basicGenerator);
     }
 
     public function testGetGenerator()

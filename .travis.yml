@@ -25,4 +25,4 @@ before_install:
 
 install: composer update
 
-script: ./vendor/bin/phpunit -v
+script: composer test
