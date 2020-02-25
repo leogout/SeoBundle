@@ -2,6 +2,7 @@
 
 namespace Leogout\Bundle\SeoBundle\DependencyInjection;
 
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -19,7 +20,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('leogout_seo');
-        $rootNode = $treeBuilder->getRootNode();
+        // Keep compatibility with symfony/config < 4.2
+        if (Kernel::VERSION_ID >= 40200) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('leogout_seo');
+        }
 
         $this->configureGeneralTree($rootNode);
         $this->configureBasicTree($rootNode);
