@@ -31,7 +31,7 @@ class OgSeoGeneratorTest extends TestCase
         $this->generator->setTitle('Awesome | Site');
 
         $this->assertEquals(
-            '<meta name="og:title" content="Awesome | Site" />',
+            '<meta property="og:title" content="Awesome | Site" />',
             $this->generator->render()
         );
 
@@ -45,7 +45,7 @@ class OgSeoGeneratorTest extends TestCase
         $this->generator->setDescription('My awesome site is so cool!');
 
         $this->assertEquals(
-            '<meta name="og:description" content="My awesome site is so cool!" />',
+            '<meta property="og:description" content="My awesome site is so cool!" />',
             $this->generator->render()
         );
 
@@ -59,7 +59,7 @@ class OgSeoGeneratorTest extends TestCase
         $this->generator->setImage('http://images.com/poney/12');
 
         $this->assertEquals(
-            '<meta name="og:image" content="http://images.com/poney/12" />',
+            '<meta property="og:image" content="http://images.com/poney/12" />',
             $this->generator->render()
         );
 
@@ -73,7 +73,7 @@ class OgSeoGeneratorTest extends TestCase
         $this->generator->setType('website');
 
         $this->assertEquals(
-            '<meta name="og:type" content="website" />',
+            '<meta property="og:type" content="website" />',
             $this->generator->render()
         );
     }
@@ -89,9 +89,9 @@ class OgSeoGeneratorTest extends TestCase
         $this->generator->fromResource($resource);
 
         $this->assertEquals(
-            "<meta name=\"og:title\" content=\"Awesome site\" />\n".
-            "<meta name=\"og:description\" content=\"My awesome site is so cool!\" />\n".
-            "<meta name=\"og:image\" content=\"http://images.com/poney/12\" />",
+            "<meta property=\"og:title\" content=\"Awesome site\" />\n".
+            "<meta property=\"og:description\" content=\"My awesome site is so cool!\" />\n".
+            "<meta property=\"og:image\" content=\"http://images.com/poney/12\" />",
             $this->generator->render()
         );
     }
