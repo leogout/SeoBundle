@@ -9,7 +9,7 @@
             <argument>%leogout_seo.twitter%</argument>
         </service>
 
-        <service id="leogout_seo.generator.twitter" class="Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator">
+        <service id="leogout_seo.generator.twitter" class="Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator" public="true">
             <argument id="leogout_seo.builder" type="service"/>
             <configurator service="leogout_seo.configurator.twitter" method="configure" />
             <tag name="leogout_seo.generator" alias="twitter"/>

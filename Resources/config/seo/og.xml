@@ -9,7 +9,7 @@
             <argument>%leogout_seo.og%</argument>
         </service>
 
-        <service id="leogout_seo.generator.og" class="Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator">
+        <service id="leogout_seo.generator.og" class="Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator" public="true">
             <argument id="leogout_seo.builder" type="service"/>
             <configurator service="leogout_seo.configurator.og" method="configure" />
             <tag name="leogout_seo.generator" alias="og"/>
