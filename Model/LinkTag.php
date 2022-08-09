@@ -10,101 +10,101 @@ namespace Leogout\Bundle\SeoBundle\Model;
 class LinkTag implements RenderableInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $rel;
+    protected ?string $rel = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $href;
+    protected ?string $href = null;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getHref()
+    public function getHref() : ?string
     {
         return $this->href;
     }
 
     /**
-     * @param string $href
+     * @param string|null $href
      *
      * @return $this
      */
-    public function setHref($href)
+    public function setHref(?string $href) : self
     {
-        $this->href = (string) $href;
+        $this->href = $href;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRel()
+    public function getRel() : ?string
     {
         return $this->rel;
     }
 
     /**
-     * @param string $rel
+     * @param string|null $rel
      *
      * @return $this
      */
-    public function setRel($rel)
+    public function setRel(?string $rel) : self
     {
-        $this->rel = (string) $rel;
+        $this->rel = $rel;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getType() : ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param string|null $type
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(?string $type) : self
     {
-        $this->type = (string) $type;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle() : ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(?string $title) : self
     {
-        $this->title = (string) $title;
+        $this->title = $title;
 
         return $this;
     }
@@ -113,11 +113,11 @@ class LinkTag implements RenderableInterface
      * Returns a string only if $value isn't null
      *
      * @param string $format
-     * @param string $value
+     * @param string|null $value
      *
      * @return string
      */
-    private function sprintfIfNotNull($format, $value)
+    private function sprintfIfNotNull(string $format, ?string $value) : string
     {
         if ('' === $value || null === $value) {
             return '';
@@ -129,7 +129,7 @@ class LinkTag implements RenderableInterface
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         $href = $this->sprintfIfNotNull('href="%s" ', $this->getHref());
         $rel = $this->sprintfIfNotNull('rel="%s" ', $this->getRel());

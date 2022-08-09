@@ -10,26 +10,26 @@ namespace Leogout\Bundle\SeoBundle\Model;
 class TitleTag implements RenderableInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $content;
+    protected ?string $content = null;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent()
+    public function getContent() : ?string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
+     * @param string|null $content
      *
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(?string $content) : self
     {
-        $this->content = (string) $content;
+        $this->content = $content;
 
         return $this;
     }
@@ -37,9 +37,10 @@ class TitleTag implements RenderableInterface
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
-        return sprintf('<title>%s</title>', $this->getContent());
+        $content = $this->getContent();
+        return sprintf('<title>%s</title>', is_null($content) ? '' : $content);
     }
 
     /**

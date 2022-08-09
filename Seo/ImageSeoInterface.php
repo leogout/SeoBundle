@@ -12,5 +12,5 @@ interface ImageSeoInterface
     /**
      * @return string
      */
-    public function getSeoImage();
+    public function getSeoImage() : string;
 }

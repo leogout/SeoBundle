@@ -19,15 +19,17 @@ class TwitterSeoGeneratorTest extends TestCase
     /**
      * @var TwitterSeoGenerator
      */
-    protected $generator;
+    protected TwitterSeoGenerator $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new TwitterSeoGenerator(new TagBuilder(new TagFactory()));
     }
 
     public function testTitle()
     {
+        $this->assertNull($this->generator->getTitle());
+
         $this->generator->setTitle('Awesome | Site');
 
         $this->assertEquals(
@@ -42,6 +44,8 @@ class TwitterSeoGeneratorTest extends TestCase
 
     public function testDescription()
     {
+        $this->assertNull($this->generator->getDescription());
+
         $this->generator->setDescription('My awesome site is so cool!');
 
         $this->assertEquals(
@@ -56,10 +60,12 @@ class TwitterSeoGeneratorTest extends TestCase
 
     public function testImage()
     {
-        $this->generator->setImage('http://images.com/poney/12');
+        $this->assertNull($this->generator->getImage());
+
+        $this->generator->setImage('https://example.com/poney/12');
 
         $this->assertEquals(
-            '<meta name="twitter:image" content="http://images.com/poney/12" />',
+            '<meta name="twitter:image" content="https://example.com/poney/12" />',
             $this->generator->render()
         );
 
@@ -70,6 +76,8 @@ class TwitterSeoGeneratorTest extends TestCase
 
     public function testCard()
     {
+        $this->assertNull($this->generator->getCard());
+
         $this->generator->setCard('summary');
 
         $this->assertEquals(
@@ -80,6 +88,8 @@ class TwitterSeoGeneratorTest extends TestCase
 
     public function testSite()
     {
+        $this->assertNull($this->generator->getSite());
+
         $this->generator->setSite('@leogoutt');
 
         $this->assertEquals(
@@ -94,14 +104,14 @@ class TwitterSeoGeneratorTest extends TestCase
 
         $resource->method('getSeoTitle')->willReturn('Awesome site');
         $resource->method('getSeoDescription')->willReturn('My awesome site is so cool!');
-        $resource->method('getSeoImage')->willReturn('http://images.com/poney/12');
+        $resource->method('getSeoImage')->willReturn('https://example.com/poney/12');
 
         $this->generator->fromResource($resource);
 
         $this->assertEquals(
             "<meta name=\"twitter:title\" content=\"Awesome site\" />\n".
             "<meta name=\"twitter:description\" content=\"My awesome site is so cool!\" />\n".
-            "<meta name=\"twitter:image\" content=\"http://images.com/poney/12\" />",
+            "<meta name=\"twitter:image\" content=\"https://example.com/poney/12\" />",
             $this->generator->render()
         );
     }

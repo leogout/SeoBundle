@@ -19,15 +19,17 @@ class OgSeoGeneratorTest extends TestCase
     /**
      * @var OgSeoGenerator
      */
-    protected $generator;
+    protected OgSeoGenerator $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new OgSeoGenerator(new TagBuilder(new TagFactory()));
     }
 
     public function testTitle()
     {
+        $this->assertNull($this->generator->getTitle());
+
         $this->generator->setTitle('Awesome | Site');
 
         $this->assertEquals(
@@ -42,6 +44,8 @@ class OgSeoGeneratorTest extends TestCase
 
     public function testDescription()
     {
+        $this->assertNull($this->generator->getDescription());
+
         $this->generator->setDescription('My awesome site is so cool!');
 
         $this->assertEquals(
@@ -56,10 +60,12 @@ class OgSeoGeneratorTest extends TestCase
 
     public function testImage()
     {
-        $this->generator->setImage('http://images.com/poney/12');
+        $this->assertNull($this->generator->getDescription());
+
+        $this->generator->setImage('https://example.com/poney/12');
 
         $this->assertEquals(
-            '<meta property="og:image" content="http://images.com/poney/12" />',
+            '<meta property="og:image" content="https://example.com/poney/12" />',
             $this->generator->render()
         );
 
@@ -70,6 +76,8 @@ class OgSeoGeneratorTest extends TestCase
 
     public function testType()
     {
+        $this->assertNull($this->generator->getType());
+
         $this->generator->setType('website');
 
         $this->assertEquals(
@@ -84,14 +92,14 @@ class OgSeoGeneratorTest extends TestCase
 
         $resource->method('getSeoTitle')->willReturn('Awesome site');
         $resource->method('getSeoDescription')->willReturn('My awesome site is so cool!');
-        $resource->method('getSeoImage')->willReturn('http://images.com/poney/12');
+        $resource->method('getSeoImage')->willReturn('https://example.com/poney/12');
 
         $this->generator->fromResource($resource);
 
         $this->assertEquals(
             "<meta property=\"og:title\" content=\"Awesome site\" />\n".
             "<meta property=\"og:description\" content=\"My awesome site is so cool!\" />\n".
-            "<meta property=\"og:image\" content=\"http://images.com/poney/12\" />",
+            "<meta property=\"og:image\" content=\"https://example.com/poney/12\" />",
             $this->generator->render()
         );
     }

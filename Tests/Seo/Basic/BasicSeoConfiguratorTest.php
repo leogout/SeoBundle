@@ -9,6 +9,8 @@ use Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoGenerator;
 use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
 
+use Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException;
+
 /**
  * Description of BasicSeoConfiguratorTest.
  *
@@ -19,19 +21,19 @@ class BasicSeoConfiguratorTest extends TestCase
     /**
      * @var BasicSeoGenerator
      */
-    protected $generator;
+    protected BasicSeoGenerator $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new BasicSeoGenerator(new TagBuilder(new TagFactory()));
     }
 
-    /**
-     * @expectedException \Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException
-     * @expectedExceptionMessage Invalid seo generator passed to Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoConfigurator. Expected "Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoGenerator", but got "Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator".
-     */
     public function testException()
     {
+        $this->expectException(InvalidSeoGeneratorException::class,
+            sprintf('Invalid seo generator passed to %s. Expected "%s", but got "%s".',
+                BasicSeoConfigurator::class, BasicSeoGenerator::class, TwitterSeoGenerator::class));
+
         $invalidGenerator = new TwitterSeoGenerator(new TagBuilder(new TagFactory()));
         $configurator = new BasicSeoConfigurator([]);
         $configurator->configure($invalidGenerator);
@@ -85,14 +87,14 @@ class BasicSeoConfiguratorTest extends TestCase
     public function testCanonical()
     {
         $config = [
-            'canonical' => 'http://127.0.0.1:8000',
+            'canonical' => 'https://example.com/canonical',
         ];
 
         $configurator = new BasicSeoConfigurator($config);
         $configurator->configure($this->generator);
 
         $this->assertEquals(
-            '<link href="http://127.0.0.1:8000" rel="canonical" />',
+            '<link href="https://example.com/canonical" rel="canonical" />',
             $this->generator->render()
         );
     }

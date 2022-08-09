@@ -15,7 +15,7 @@ abstract class AbstractSeoGenerator implements RenderableInterface
     /**
      * @var TagBuilder
      */
-    protected $tagBuilder;
+    protected TagBuilder $tagBuilder;
 
     /**
      * BasicSeoBuilder constructor.
@@ -30,7 +30,7 @@ abstract class AbstractSeoGenerator implements RenderableInterface
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         return $this->tagBuilder->render();
     }

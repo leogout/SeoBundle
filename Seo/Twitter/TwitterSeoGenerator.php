@@ -20,15 +20,15 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setCard($content)
+    public function setCard(string $content) : self
     {
         return $this->set('twitter:card', $content);
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getCard()
+    public function getCard() : ?MetaTag
     {
         return $this->get('twitter:card');
     }
@@ -38,15 +38,15 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setTitle($content)
+    public function setTitle(string $content) : self
     {
         return $this->set('twitter:title', $content);
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getTitle()
+    public function getTitle() : ?MetaTag
     {
         return $this->get('twitter:title');
     }
@@ -56,15 +56,15 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setSite($content)
+    public function setSite(string $content) : self
     {
         return $this->set('twitter:site', $content);
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getSite()
+    public function getSite() : ?MetaTag
     {
         return $this->get('twitter:site');
     }
@@ -74,15 +74,15 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setDescription($content)
+    public function setDescription(string $content) : self
     {
         return $this->set('twitter:description', $content);
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getDescription()
+    public function getDescription() : ?MetaTag
     {
         return $this->get('twitter:description');
     }
@@ -92,15 +92,15 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setImage($content)
+    public function setImage(string $content) : self
     {
         return $this->set('twitter:image', $content);
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getImage()
+    public function getImage() : ?MetaTag
     {
         return $this->get('twitter:image');
     }
@@ -112,7 +112,7 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function fromResource($resource)
+    public function fromResource(TitleSeoInterface|DescriptionSeoInterface|ImageSeoInterface $resource) : self
     {
         if ($resource instanceof TitleSeoInterface) {
             $this->setTitle($resource->getSeoTitle());
@@ -130,9 +130,9 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
     /**
      * @param string $type
      *
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function get($type)
+    public function get(string $type) : ?MetaTag
     {
         return $this->tagBuilder->getMeta($type);
     }
@@ -143,12 +143,12 @@ class TwitterSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function set($type, $value)
+    public function set(string $type, string $value) : self
     {
         $this->tagBuilder->addMeta($type)
             ->setType(MetaTag::NAME_TYPE)
             ->setValue($type)
-            ->setContent((string) $value);
+            ->setContent($value);
 
         return $this;
     }

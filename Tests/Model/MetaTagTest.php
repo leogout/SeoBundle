@@ -5,6 +5,8 @@ namespace Leogout\Bundle\SeoBundle\Tests\Model;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
 
+use InvalidArgumentException;
+
 /**
  * Description of MetaTagTest.
  *
@@ -12,6 +14,13 @@ use Leogout\Bundle\SeoBundle\Tests\TestCase;
  */
 class MetaTagTest extends TestCase
 {
+    public function testNullValues()
+    {
+        $metaTag = new MetaTag();
+        $this->assertNull($metaTag->getValue());
+        $this->assertNull($metaTag->getContent());
+    }
+
     public function testRenderName()
     {
         $metaTag = new MetaTag();
@@ -64,12 +73,10 @@ class MetaTagTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Meta tag of type "unknownType" doesn't exist. Existing types are: name, property and http-equiv.
-     */
     public function testSetUnknownType()
     {
+        $this->expectException(InvalidArgumentException::class, sprintf('Meta tag of type "%s" doesn\'t exist. Existing types are: name, property and http-equiv.', 'unknownType'));
+
         $metaTag = new MetaTag();
         $metaTag->setType('unknownType');
     }

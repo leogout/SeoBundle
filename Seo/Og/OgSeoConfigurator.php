@@ -16,7 +16,7 @@ class OgSeoConfigurator extends AbstractSeoConfigurator
     /**
      * @param AbstractSeoGenerator $generator
      */
-    public function configure(AbstractSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator) : void
     {
         if (!($generator instanceof OgSeoGenerator)) {
             throw new InvalidSeoGeneratorException(__CLASS__, OgSeoGenerator::class, get_class($generator));

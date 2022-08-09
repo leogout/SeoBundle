@@ -2,6 +2,7 @@
 
 namespace Leogout\Bundle\SeoBundle\Seo\Basic;
 
+use Leogout\Bundle\SeoBundle\Model\LinkTag;
 use Leogout\Bundle\SeoBundle\Model\MetaTag;
 use Leogout\Bundle\SeoBundle\Model\TitleTag;
 use Leogout\Bundle\SeoBundle\Seo\AbstractSeoGenerator;
@@ -21,7 +22,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setTitle($content)
+    public function setTitle(string $content) : self
     {
         $this->tagBuilder->setTitle($content);
 
@@ -29,9 +30,9 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     }
 
     /**
-     * @return TitleTag
+     * @return TitleTag|null
      */
-    public function getTitle()
+    public function getTitle() : ?TitleTag
     {
         return $this->tagBuilder->getTitle();
     }
@@ -41,20 +42,20 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setDescription($content)
+    public function setDescription(string $content) : self
     {
         $this->tagBuilder->addMeta('description')
             ->setType(MetaTag::NAME_TYPE)
             ->setValue('description')
-            ->setContent((string) $content);
+            ->setContent($content);
 
         return $this;
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getDescription()
+    public function getDescription() : ?MetaTag
     {
         return $this->tagBuilder->getMeta('description');
     }
@@ -64,20 +65,20 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords) : self
     {
         $this->tagBuilder->addMeta('keywords')
             ->setType(MetaTag::NAME_TYPE)
             ->setValue('keywords')
-            ->setContent((string) $keywords);
+            ->setContent($keywords);
 
         return $this;
     }
 
     /**
-     * @return MetaTag
+     * @return MetaTag|null
      */
-    public function getKeywords()
+    public function getKeywords() : ?MetaTag
     {
         return $this->tagBuilder->getMeta('keywords');
     }
@@ -88,7 +89,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setRobots($shouldIndex, $shouldFollow)
+    public function setRobots(bool $shouldIndex, bool $shouldFollow) : self
     {
         $index = $shouldIndex ? 'index' : 'noindex';
         $follow = $shouldFollow ? 'follow' : 'nofollow';
@@ -102,17 +103,11 @@ class BasicSeoGenerator extends AbstractSeoGenerator
     }
 
     /**
-     * @param string $url
-     *
-     * @return $this
+     * @return MetaTag|null
      */
-    public function setCanonical($url)
+    public function getRobots() : ?MetaTag
     {
-        $this->tagBuilder->addLink('canonical')
-            ->setHref((string) $url)
-            ->setRel('canonical');
-
-        return $this;
+        return $this->tagBuilder->getMeta('robots');
     }
 
     /**
@@ -120,12 +115,43 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function setAmpHtml($url)
+    public function setCanonical(string $url) : self
+    {
+        $this->tagBuilder->addLink('canonical')
+            ->setHref($url)
+            ->setRel('canonical');
+
+        return $this;
+    }
+
+    /**
+     * @return LinkTag|null
+     */
+    public function getCanonical() : ?LinkTag
+    {
+        return $this->tagBuilder->getLink('canonical');
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setAmpHtml(string $url) : self
     {
         $this->tagBuilder->addLink('amphtml')
-            ->setHref((string) $url)
+            ->setHref($url)
             ->setRel('amphtml');
+
         return $this;
+    }
+
+    /**
+     * @return LinkTag|null
+     */
+    public function getAmpHtml() : ?LinkTag
+    {
+        return $this->tagBuilder->getLink('amphtml');
     }
 
     /**
@@ -135,7 +161,7 @@ class BasicSeoGenerator extends AbstractSeoGenerator
      *
      * @return $this
      */
-    public function fromResource($resource)
+    public function fromResource(TitleSeoInterface|DescriptionSeoInterface|KeywordsSeoInterface $resource) : self
     {
         if ($resource instanceof TitleSeoInterface) {
             $this->setTitle($resource->getSeoTitle());

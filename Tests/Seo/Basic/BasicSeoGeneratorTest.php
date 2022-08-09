@@ -20,9 +20,9 @@ class BasicSeoGeneratorTest extends TestCase
     /**
      * @var BasicSeoGenerator
      */
-    protected $generator;
+    protected BasicSeoGenerator $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new BasicSeoGenerator(new TagBuilder(new TagFactory()));
     }
@@ -43,6 +43,8 @@ class BasicSeoGeneratorTest extends TestCase
 
     public function testDescription()
     {
+        $this->assertNull($this->generator->getDescription());
+
         $this->generator->setDescription('My awesome site is so cool!');
 
         $this->assertEquals(
@@ -57,6 +59,8 @@ class BasicSeoGeneratorTest extends TestCase
 
     public function testKeywords()
     {
+        $this->assertNull($this->generator->getKeywords());
+
         $this->generator->setKeywords('awesome, cool');
 
         $this->assertEquals(
@@ -71,16 +75,32 @@ class BasicSeoGeneratorTest extends TestCase
 
     public function testCanonical()
     {
-        $this->generator->setCanonical('http://127.0.0.1:8000');
+        $this->assertNull($this->generator->getCanonical());
+
+        $this->generator->setCanonical('https://example.com/canonical');
 
         $this->assertEquals(
-            '<link href="http://127.0.0.1:8000" rel="canonical" />',
+            '<link href="https://example.com/canonical" rel="canonical" />',
+            $this->generator->render()
+        );
+    }
+
+    public function testAmpHtml()
+    {
+        $this->assertNull($this->generator->getAmpHtml());
+
+        $this->generator->setAmpHtml('https://example.com/foo/bar');
+
+        $this->assertEquals(
+            '<link href="https://example.com/foo/bar" rel="amphtml" />',
             $this->generator->render()
         );
     }
 
     public function testRobots()
     {
+        $this->assertNull($this->generator->getRobots());
+
         $this->generator->setRobots(true, true);
 
         $this->assertEquals(
@@ -108,10 +128,14 @@ class BasicSeoGeneratorTest extends TestCase
             '<meta name="robots" content="noindex, follow" />',
             $this->generator->render()
         );
+
+        $this->assertInstanceOf(MetaTag::class, $this->generator->getRobots());
     }
 
     public function testFromResource()
     {
+        $this->assertEmpty($this->generator->render());
+
         $resource = $this->getMockBuilder(BasicSeoInterface::class)->getMock();
 
         $resource->method('getSeoTitle')->willReturn('Awesome site');

@@ -8,6 +8,8 @@ use Leogout\Bundle\SeoBundle\Provider\SeoGeneratorProvider;
 use Leogout\Bundle\SeoBundle\Seo\Basic\BasicSeoGenerator;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
 
+use InvalidArgumentException;
+
 /**
  * Description of SeoGeneratorProviderTest.
  *
@@ -18,9 +20,9 @@ class SeoGeneratorProviderTest extends TestCase
     /**
      * @var SeoGeneratorProvider
      */
-    protected $provider;
+    protected SeoGeneratorProvider $provider;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $tagBuilder = new TagBuilder(new TagFactory());
         $basicGenerator = new BasicSeoGenerator($tagBuilder);
@@ -38,12 +40,9 @@ class SeoGeneratorProviderTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The SEO generator with alias "undefined" is not defined.
-     */
     public function testGetUndefinedGenerator()
     {
+        $this->expectException(InvalidArgumentException::class, sprintf('The SEO generator with alias "%s" is not defined.', 'undefined'));
         $this->provider->get('undefined');
     }
 

@@ -12,5 +12,5 @@ interface KeywordsSeoInterface
     /**
      * @return string
      */
-    public function getSeoKeywords();
+    public function getSeoKeywords() : string;
 }

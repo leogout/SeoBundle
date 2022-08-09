@@ -12,7 +12,7 @@ interface RenderableInterface
     /**
      * @return string
      */
-    public function render();
+    public function render() : string;
 
     /**
      * @return string

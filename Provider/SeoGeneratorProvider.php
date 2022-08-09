@@ -14,7 +14,7 @@ class SeoGeneratorProvider
     /**
      * @var AbstractSeoGenerator[]
      */
-    protected $generators = [];
+    protected array $generators = [];
 
     /**
      * @param string $alias
@@ -22,7 +22,7 @@ class SeoGeneratorProvider
      *
      * @return self
      */
-    public function set(string $alias, AbstractSeoGenerator $generator)
+    public function set(string $alias, AbstractSeoGenerator $generator) : self
     {
         $this->generators[$alias] = $generator;
 
@@ -34,7 +34,7 @@ class SeoGeneratorProvider
      *
      * @return AbstractSeoGenerator
      */
-    public function get($alias)
+    public function get(string $alias) : AbstractSeoGenerator
     {
         if (!isset($this->generators[$alias])) {
             throw new \InvalidArgumentException(sprintf('The SEO generator with alias "%s" is not defined.', $alias));
@@ -46,17 +46,17 @@ class SeoGeneratorProvider
     /**
      * @return AbstractSeoGenerator[]
      */
-    public function getAll()
+    public function getAll() : array
     {
         return $this->generators;
     }
 
     /**
-     * @param $alias
+     * @param string $alias
      *
      * @return bool
      */
-    public function has($alias)
+    public function has(string $alias) : bool
     {
         return isset($this->generators[$alias]);
     }

@@ -12,5 +12,5 @@ interface DescriptionSeoInterface
     /**
      * @return string
      */
-    public function getSeoDescription();
+    public function getSeoDescription() : string;
 }
