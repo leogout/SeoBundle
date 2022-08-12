@@ -21,15 +21,23 @@ jobs:
           - 5.3.14
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - name: Get the code from repository
+        uses: actions/checkout@v3
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
         with:
-          path: /tmp/composer-cache
-          key: ${{ matrix.symfony-version }}-${{ hashFiles('**/composer.json') }}
+          path: vendor
+          key: ${{ matrix.symfony-version }}-php-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ matrix.symfony-version }}-php-
+
       - name: symfony/framework-bundle:${{ matrix.symfony-version }}
-      - uses: php-actions/composer@v6
-        with:
-          php_version: 8.1
-          command: composer require "symfony/framework-bundle:${{ matrix.symfony-version }}" && composer install
-      - name: run test
-      - run: composer test
+        run: composer require "symfony/framework-bundle:${{ matrix.symfony-version }}"
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suite
+        run: composer run-script test
