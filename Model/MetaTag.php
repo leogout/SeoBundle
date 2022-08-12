@@ -16,22 +16,22 @@ class MetaTag implements RenderableInterface
     /**
      * @var string
      */
-    protected $type = self::NAME_TYPE;
+    protected string $type = self::NAME_TYPE;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $value;
+    protected ?string $value = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $content;
+    protected ?string $content = null;
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType() : string
     {
         return $this->type;
     }
@@ -41,7 +41,7 @@ class MetaTag implements RenderableInterface
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type) : self
     {
         if (!in_array($type, $this->getTypes())) {
             throw new \InvalidArgumentException(sprintf('Meta tag of type "%s" doesn\'t exist. Existing types are: name, property and http-equiv.', $type));
@@ -53,41 +53,41 @@ class MetaTag implements RenderableInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getValue()
+    public function getValue() : ?string
     {
         return $this->value;
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      *
      * @return $this
      */
-    public function setValue($value)
+    public function setValue(?string $value) : self
     {
-        $this->value = (string) $value;
+        $this->value = $value;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getContent()
+    public function getContent() : ?string
     {
         return $this->content;
     }
 
     /**
-     * @param string $content
+     * @param string|null $content
      *
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(?string $content) : self
     {
-        $this->content = (string) $content;
+        $this->content = $content;
 
         return $this;
     }
@@ -95,7 +95,7 @@ class MetaTag implements RenderableInterface
     /**
      * @return array
      */
-    public function getTypes()
+    public function getTypes() : array
     {
         return [
             self::NAME_TYPE,
@@ -107,7 +107,7 @@ class MetaTag implements RenderableInterface
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         return sprintf('<meta %s="%s" content="%s" />', $this->getType(), $this->getValue(), $this->getContent());
     }

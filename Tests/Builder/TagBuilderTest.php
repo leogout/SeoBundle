@@ -17,11 +17,20 @@ class TagBuilderTest extends TestCase
     /**
      * @var TagBuilder
      */
-    protected $tagBuilder;
+    protected TagBuilder $tagBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tagBuilder = new TagBuilder(new TagFactory());
+    }
+
+    public function testNullTypes()
+    {
+        $tagBuilder = new TagBuilder(new TagFactory());
+
+        $this->assertNull($tagBuilder->getTitle());
+        $this->assertNull($tagBuilder->getMeta('foo'));
+        $this->assertNull($tagBuilder->getLink('bar'));
     }
 
     public function testRenderAll()
@@ -29,7 +38,7 @@ class TagBuilderTest extends TestCase
         $this->tagBuilder->setTitle('Awesonme | Site');
         $this->tagBuilder->addMeta('keywords', MetaTag::NAME_TYPE, 'keywords', 'your, tags');
         $this->tagBuilder->addLink('rss',
-            'http://symfony.com/blog',
+            'https://example.com/blog',
             'alternate',
             'application/rss+xml',
             'RSS'
@@ -38,7 +47,7 @@ class TagBuilderTest extends TestCase
         $this->assertEquals(
             "<title>Awesonme | Site</title>\n".
             "<meta name=\"keywords\" content=\"your, tags\" />\n".
-            "<link href=\"http://symfony.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
+            "<link href=\"https://example.com/blog\" rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" />",
             $this->tagBuilder->render()
         );
     }
@@ -66,14 +75,14 @@ class TagBuilderTest extends TestCase
     public function testRenderLink()
     {
         $this->tagBuilder->addLink('rss',
-            'http://symfony.com/blog',
+            'https://example.com/blog',
             'alternate',
             'application/rss+xml',
             'RSS'
         );
 
         $this->assertEquals(
-            '<link href="http://symfony.com/blog" rel="alternate" type="application/rss+xml" title="RSS" />',
+            '<link href="https://example.com/blog" rel="alternate" type="application/rss+xml" title="RSS" />',
             $this->tagBuilder->render()
         );
     }

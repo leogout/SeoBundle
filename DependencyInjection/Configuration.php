@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}
+     * @return TreeBuilder
      */
     public function getConfigTreeBuilder()
     {
@@ -98,9 +99,5 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('site')->cannotBeEmpty()->end()
             ->end();
     }
-
-
-
-
 
 }

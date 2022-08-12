@@ -9,6 +9,8 @@ use Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator;
 use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
 
+use Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException;
+
 /**
  * Description of OgSeoConfiguratorTest.
  *
@@ -19,19 +21,18 @@ class OgSeoConfiguratorTest extends TestCase
     /**
      * @var OgSeoGenerator
      */
-    protected $generator;
+    protected OgSeoGenerator $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new OgSeoGenerator(new TagBuilder(new TagFactory()));
     }
 
-    /**
-     * @expectedException \Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException
-     * @expectedExceptionMessage Invalid seo generator passed to Leogout\Bundle\SeoBundle\Seo\Og\OgSeoConfigurator. Expected "Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator", but got "Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator".
-     */
     public function testException()
     {
+        $this->expectException(InvalidSeoGeneratorException::class, sprintf('Invalid seo generator passed to %s. Expected "%s", but got "%s".', 
+            OgSeoConfigurator::class, OgSeoGenerator::class, TwitterSeoGenerator::class));
+
         $invalidGenerator = new TwitterSeoGenerator(new TagBuilder(new TagFactory()));
         $configurator = new OgSeoConfigurator([]);
         $configurator->configure($invalidGenerator);
@@ -70,14 +71,14 @@ class OgSeoConfiguratorTest extends TestCase
     public function testImage()
     {
         $config = [
-            'image' => 'http://images.com/poney/12',
+            'image' => 'https://example.com/poney/12',
         ];
 
         $configurator = new OgSeoConfigurator($config);
         $configurator->configure($this->generator);
 
         $this->assertEquals(
-            '<meta property="og:image" content="http://images.com/poney/12" />',
+            '<meta property="og:image" content="https://example.com/poney/12" />',
             $this->generator->render()
         );
     }

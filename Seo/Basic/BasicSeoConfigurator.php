@@ -16,7 +16,7 @@ class BasicSeoConfigurator extends AbstractSeoConfigurator
     /**
      * @param AbstractSeoGenerator $generator
      */
-    public function configure(AbstractSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator) : void
     {
         if (!($generator instanceof BasicSeoGenerator)) {
             throw new InvalidSeoGeneratorException(__CLASS__, BasicSeoGenerator::class, get_class($generator));

@@ -18,7 +18,7 @@ class SeoExtension extends AbstractExtension
     /**
      * @var SeoGeneratorProvider
      */
-    protected $generatorProvider;
+    protected SeoGeneratorProvider $generatorProvider;
 
     /**
      * SeoExtension constructor.
@@ -32,6 +32,7 @@ class SeoExtension extends AbstractExtension
 
     /**
      * {@inheritdoc}
+     * @return array|TwigFunction[]
      */
     public function getFunctions()
     {
@@ -41,11 +42,11 @@ class SeoExtension extends AbstractExtension
     }
 
     /**
-     * @param $alias
+     * @param string|null $alias
      *
      * @return string
      */
-    public function seo($alias = null)
+    public function seo(?string $alias = null) : string
     {
         if (null !== $alias) {
             return $this->generatorProvider->get($alias)->render();

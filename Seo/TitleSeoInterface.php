@@ -12,5 +12,5 @@ interface TitleSeoInterface
     /**
      * @return string
      */
-    public function getSeoTitle();
+    public function getSeoTitle() : string;
 }

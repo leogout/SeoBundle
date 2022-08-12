@@ -12,6 +12,12 @@ use Leogout\Bundle\SeoBundle\Tests\TestCase;
  */
 class TitleTagTest extends TestCase
 {
+    public function testNullValues()
+    {
+        $titleTag = new TitleTag();
+        $this->assertNull($titleTag->getContent());
+    }
+
     public function testRender()
     {
         $titleTag = new TitleTag();

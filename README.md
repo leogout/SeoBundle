@@ -3,7 +3,7 @@ This bundle provides a simple and flexible API to manage _search engine optimiza
 Its main goal is to make it simple for you to manage the most common **meta**, **open graph** and **twitter card** tags
 and to let you configure less common ones with ease.
 
-[![Build Status](https://travis-ci.org/leogout/SeoBundle.svg?branch=master)](https://travis-ci.org/leogout/SeoBundle)
+[![Test Runner](https://github.com/leogout/SeoBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/leogout/SeoBundle/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/leogout/SeoBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/leogout/SeoBundle/?branch=master)
 
 ## Installation

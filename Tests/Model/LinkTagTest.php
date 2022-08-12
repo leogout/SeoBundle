@@ -12,17 +12,27 @@ use Leogout\Bundle\SeoBundle\Tests\TestCase;
  */
 class LinkTagTest extends TestCase
 {
+    public function testNullValues()
+    {
+        $linkTag = new LinkTag();
+
+        $this->assertNull($linkTag->getHref());
+        $this->assertNull($linkTag->getRel());
+        $this->assertNull($linkTag->getType());
+        $this->assertNull($linkTag->getTitle());
+    }
+
     public function testRenderAll()
     {
         $linkTag = new LinkTag();
         $linkTag
-            ->setHref('http://symfony.com/blog')
+            ->setHref('https://example.com/blog')
             ->setRel('alternate')
             ->setType('application/rss+xml')
             ->setTitle('RSS');
 
         $this->assertEquals(
-            '<link href="http://symfony.com/blog" rel="alternate" type="application/rss+xml" title="RSS" />',
+            '<link href="https://example.com/blog" rel="alternate" type="application/rss+xml" title="RSS" />',
             $linkTag->render()
         );
     }
@@ -31,11 +41,11 @@ class LinkTagTest extends TestCase
     {
         $linkTag = new LinkTag();
         $linkTag
-            ->setHref('http://symfony.com/blog')
+            ->setHref('https://example.com/blog')
             ->setRel('alternate');
 
         $this->assertEquals(
-            '<link href="http://symfony.com/blog" rel="alternate" />',
+            '<link href="https://example.com/blog" rel="alternate" />',
             $linkTag->render()
         );
     }

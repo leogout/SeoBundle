@@ -6,6 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Throwable;
 
 /**
  * Description of LeogoutSeoExtension.
@@ -16,6 +17,7 @@ class LeogoutSeoExtension extends Extension
 {
     /**
      * {@inheritdoc}
+     * @throws Throwable
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -39,8 +41,9 @@ class LeogoutSeoExtension extends Extension
      * @param ContainerBuilder $container
      * @param XmlFileLoader $loader
      * @param array $config
+     * @throws Throwable
      */
-    private function loadIfConfigured($configName, ContainerBuilder $container, XmlFileLoader $loader, array $config)
+    private function loadIfConfigured(string $configName, ContainerBuilder $container, XmlFileLoader $loader, array $config)
     {
         if (!isset($config[$configName])) {
             return;

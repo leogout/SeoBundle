@@ -12,7 +12,7 @@ abstract class AbstractSeoConfigurator
     /**
      * @var array
      */
-    protected $config;
+    protected array $config;
 
     /**
      * TwitterSeoConfigurator constructor.
@@ -27,14 +27,14 @@ abstract class AbstractSeoConfigurator
     /**
      * @param AbstractSeoGenerator $generator
      */
-    abstract public function configure(AbstractSeoGenerator $generator);
+    abstract public function configure(AbstractSeoGenerator $generator) : void;
 
     /**
      * @param string $name
      *
-     * @return mixed|null
+     * @return mixed
      */
-    protected function getConfig($name)
+    protected function getConfig(string $name) : mixed
     {
         if (!isset($this->config[$name])) {
             return null;

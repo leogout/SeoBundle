@@ -16,7 +16,7 @@ class TwitterSeoConfigurator extends AbstractSeoConfigurator
     /**
      * @param AbstractSeoGenerator $generator
      */
-    public function configure(AbstractSeoGenerator $generator)
+    public function configure(AbstractSeoGenerator $generator) : void
     {
         if (!($generator instanceof TwitterSeoGenerator)) {
             throw new InvalidSeoGeneratorException(__CLASS__, TwitterSeoGenerator::class, get_class($generator));

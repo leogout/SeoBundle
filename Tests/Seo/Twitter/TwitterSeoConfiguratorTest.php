@@ -9,6 +9,8 @@ use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoConfigurator;
 use Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator;
 use Leogout\Bundle\SeoBundle\Tests\TestCase;
 
+use Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException;
+
 /**
  * Description of TwitterSeoConfiguratorTest.
  *
@@ -21,17 +23,16 @@ class TwitterSeoConfiguratorTest extends TestCase
      */
     protected $generator;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->generator = new TwitterSeoGenerator(new TagBuilder(new TagFactory()));
     }
 
-    /**
-     * @expectedException \Leogout\Bundle\SeoBundle\Exception\InvalidSeoGeneratorException
-     * @expectedExceptionMessage Invalid seo generator passed to Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoConfigurator. Expected "Leogout\Bundle\SeoBundle\Seo\Twitter\TwitterSeoGenerator", but got "Leogout\Bundle\SeoBundle\Seo\Og\OgSeoGenerator".
-     */
     public function testException()
     {
+        $this->expectException(InvalidSeoGeneratorException::class, sprintf('Invalid seo generator passed to %s. Expected "%s", but got "%s".', 
+            TwitterSeoConfigurator::class, TwitterSeoGenerator::class, OgSeoGenerator::class));
+
         $invalidGenerator = new OgSeoGenerator(new TagBuilder(new TagFactory()));
         $configurator = new TwitterSeoConfigurator([]);
         $configurator->configure($invalidGenerator);
@@ -70,14 +71,14 @@ class TwitterSeoConfiguratorTest extends TestCase
     public function testImage()
     {
         $config = [
-            'image' => 'http://images.com/poney/12',
+            'image' => 'https://example.com/poney/12',
         ];
 
         $configurator = new TwitterSeoConfigurator($config);
         $configurator->configure($this->generator);
 
         $this->assertEquals(
-            '<meta name="twitter:image" content="http://images.com/poney/12" />',
+            '<meta name="twitter:image" content="https://example.com/poney/12" />',
             $this->generator->render()
         );
     }

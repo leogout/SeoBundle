@@ -16,30 +16,24 @@ class TagFactory
     /**
      * @return TitleTag
      */
-    public function createTitle()
+    public function createTitle() : TitleTag
     {
-        $titleTag = new TitleTag();
-
-        return $titleTag;
+        return new TitleTag();
     }
 
     /**
      * @return MetaTag
      */
-    public function createMeta()
+    public function createMeta() : MetaTag
     {
-        $metaTag = new MetaTag();
-
-        return $metaTag;
+        return new MetaTag();
     }
 
     /**
      * @return LinkTag
      */
-    public function createLink()
+    public function createLink() : LinkTag
     {
-        $linkTag = new LinkTag();
-
-        return $linkTag;
+        return new LinkTag();
     }
 }

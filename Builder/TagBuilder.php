@@ -18,22 +18,22 @@ class TagBuilder implements RenderableInterface
     /**
      * @var TagFactory
      */
-    protected $tagFactory;
+    protected TagFactory $tagFactory;
 
     /**
-     * @var TitleTag
+     * @var TitleTag|null
      */
-    protected $title;
+    protected ?TitleTag $title = null;
 
     /**
      * @var MetaTag[]
      */
-    protected $metas = [];
+    protected array $metas = [];
 
     /**
      * @var LinkTag[]
      */
-    protected $links = [];
+    protected array $links = [];
 
     /**
      * TagBuilder constructor.
@@ -50,7 +50,7 @@ class TagBuilder implements RenderableInterface
      *
      * @return TitleTag
      */
-    public function setTitle($title)
+    public function setTitle(string $title) : TitleTag
     {
         return $this->title = $this->tagFactory
             ->createTitle()
@@ -58,22 +58,23 @@ class TagBuilder implements RenderableInterface
     }
 
     /**
-     * @return TitleTag
+     * @return TitleTag|null
      */
-    public function getTitle()
+    public function getTitle(): ?TitleTag
     {
         return $this->title;
     }
 
     /**
      * @param string      $name
-     * @param string|null $type
+     * @param string $type
      * @param string|null $value
      * @param string|null $content
      *
      * @return MetaTag
      */
-    public function addMeta($name, $type = MetaTag::NAME_TYPE, $value = null, $content = null)
+    public function addMeta(string $name, string $type = MetaTag::NAME_TYPE, ?string $value = null,
+                            ?string $content = null) : MetaTag
     {
         return $this->metas[$name] = $this->tagFactory
             ->createMeta()
@@ -87,9 +88,9 @@ class TagBuilder implements RenderableInterface
      *
      * @return MetaTag|null
      */
-    public function getMeta($name)
+    public function getMeta($name) : ?MetaTag
     {
-        return isset($this->metas[$name]) ? $this->metas[$name] : null;
+        return $this->metas[$name] ?? null;
     }
 
     /**
@@ -101,7 +102,8 @@ class TagBuilder implements RenderableInterface
      *
      * @return LinkTag
      */
-    public function addLink($name, $href = null, $rel = null, $type = null, $title = null)
+    public function addLink(string $name, ?string $href = null, ?string $rel = null, ?string $type = null,
+                            ?string $title = null) : LinkTag
     {
         return $this->links[$name] = $this->tagFactory
             ->createLink()
@@ -116,20 +118,20 @@ class TagBuilder implements RenderableInterface
      *
      * @return LinkTag|null
      */
-    public function getLink($name)
+    public function getLink(string $name) : ?LinkTag
     {
-        return isset($this->links[$name]) ? $this->links[$name] : null;
+        return $this->links[$name] ?? null;
     }
 
     /**
      * @return string
      */
-    public function render()
+    public function render() : string
     {
         $tags = [];
 
         if (null !== $this->title) {
-            array_push($tags, $this->title);
+            $tags[] = $this->title;
         }
         if (count($this->metas) > 0) {
             $tags = array_merge($tags, $this->metas);
