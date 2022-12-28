@@ -1,6 +1,6 @@
 <?php
 
-namespace Leogout\Bundle\SeoBundle\Tests\Seo\Basic;
+namespace Leogout\Bundle\SeoBundle\Tests\Provider;
 
 use Leogout\Bundle\SeoBundle\Builder\TagBuilder;
 use Leogout\Bundle\SeoBundle\Factory\TagFactory;
