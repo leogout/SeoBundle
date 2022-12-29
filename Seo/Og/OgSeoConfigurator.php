@@ -36,5 +36,14 @@ class OgSeoConfigurator extends AbstractSeoConfigurator
         if (null !== $url = $this->getConfig('url')) {
             $generator->setUrl($url);
         }
+        if (null !== $siteName = $this->getConfig('site_name')) {
+            $generator->setSiteName($siteName);
+        }
+        if (null !== $locale = $this->getConfig('locale')) {
+            $generator->setLocale($locale);
+        }
+        if (null !== $locale = $this->getConfig('determiner')) {
+            $generator->setDeterminer($locale);
+        }
     }
 }

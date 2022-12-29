@@ -106,6 +106,60 @@ class OgSeoGenerator extends AbstractSeoGenerator
     }
 
     /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setSiteName(string $content) : self
+    {
+        return $this->set('og:site_name', $content);
+    }
+
+    /**
+     * @return MetaTag|null
+     */
+    public function getSiteName() : ?MetaTag
+    {
+        return $this->get('og:site_name');
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setLocale(string $content) : self
+    {
+        return $this->set('og:locale', $content);
+    }
+
+    /**
+     * @return MetaTag|null
+     */
+    public function getLocale() : ?MetaTag
+    {
+        return $this->get('og:locale');
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setDeterminer(string $content) : self
+    {
+        return $this->set('og:determiner', $content);
+    }
+
+    /**
+     * @return MetaTag|null
+     */
+    public function getDeterminer() : ?MetaTag
+    {
+        return $this->get('og:determiner');
+    }
+
+    /**
      * Generate seo tags from given resource.
      *
      * @param TitleSeoInterface|DescriptionSeoInterface|ImageSeoInterface $resource

@@ -82,6 +82,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('image')->cannotBeEmpty()->end()
                 ->scalarNode('type')->cannotBeEmpty()->end()
                 ->scalarNode('url')->cannotBeEmpty()->end()
+                ->scalarNode('site_name')->cannotBeEmpty()->end()
+                ->scalarNode('locale')->cannotBeEmpty()->end()
+                ->scalarNode('determiner')->cannotBeEmpty()->end()
             ->end();
     }
 
